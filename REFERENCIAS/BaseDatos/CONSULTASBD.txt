@@ -1,0 +1,7 @@
+
+
+### consulta con listado del tipo de persona nombres y apellidos
+select tipo_persona.COD_TIPO_PERSONA,persona.NOMBRE,persona.APELLIDO
+from persona INNER JOIN
+    tipo_persona_persona ON persona.COD_PERSONA = tipo_persona_persona.COD_PERSONA INNER JOIN
+    tipo_persona ON tipo_persona_persona.COD_TIPO_PERSONA=tipo_persona.COD_TIPO_PERSONA
