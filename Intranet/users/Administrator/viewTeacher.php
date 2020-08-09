@@ -5,9 +5,9 @@ if (!isset($_SESSION['USU'])) {
 }
 
 include '../../service/administratorService.php';
-$administratorService = new administratorService();
-$countAlumns = $administratorService->countTypePeople(1);
-$countTeachers =$administratorService->countTypePeople(3);
+include '../../service/studentService.php';
+$studentService = new studentService();
+
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +103,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               <li class="nav-item">
+                        <li class="nav-item">
                             <a href="index.php" class="nav-link active">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
@@ -161,55 +161,113 @@ $countTeachers =$administratorService->countTypePeople(3);
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Dashboard</h1>
+                            <h1>Visualizar Docentes</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
-                                <li class="breadcrumb-item active">GestionProfesores</li>
+                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="managTeacher.php">GestionDocentes</a></li>
+                                <li class="breadcrumb-item active">VisualizarDocentes</li>
                             </ol>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
+            </section>
 
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countTeachers ?></h3>
-                                <p>Visualizar Profesores</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-list red-bg"></i>
-                            </div>
-                            <a href="viewTeacher.php" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
+            <section class="content">
+                <div class="container-fluid">
+<!-- /.row -->
+<div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Listado Alumnos</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                     </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countTeachers ?></h3>
-                                <p>Agregar Profesor</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <a href="addTeacher.php" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-            </section>            
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Cod_Docente</th>
+                      <th>Cedula</th>
+                      <th>Apellido</th>
+                      <th>Nombre</th>
+                      <th>Dirección</th>
+                      <th>Teléfono</th>
+                      <th>FechaNacimiento</th>
+                      <th>Genero</th>
+                      <th>Correo</th>
+                      <th>CorreoPersonal</th>
+                      <th>Estado</th>
+                      <th>FechaInicio</th>
+                      <th>FechaFinal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $result= $studentService->showPeople(3);
+                    while($alumn = mysqli_fetch_array($result))
+                    {
+                    echo "<tr>";
+                    echo "<td>" . $alumn['COD_PERSONA'] . "</td>";
+                    echo "<td>" . $alumn['CEDULA'] . "</td>";
+                    echo "<td>" . $alumn['APELLIDO'] . "</td>";
+                    echo "<td>" . $alumn['NOMBRE'] . "</td>";
+                    echo "<td>" . $alumn['DIRECCION'] . "</td>";
+                    echo "<td>" . $alumn['TELEFONO'] . "</td>";
+                    echo "<td>" . $alumn['FECHA_NACIMIENTO'] . "</td>";
+                    echo "<td>" . $alumn['GENERO'] . "</td>";
+                    echo "<td>" . $alumn['CORREO'] . "</td>";
+                    echo "<td>" . $alumn['CORREO_PERSONAL'] . "</td>";
+                    echo "<td>" . $alumn['ESTADO'] . "</td>";
+                    echo "<td>" . $alumn['FECHA_INICIO'] . "</td>";
+                    echo "<td>" . $alumn['FECH_FIN'] . "</td>";
+
+                    echo "</tr>"; 
+                    }                    
+                    ?>
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
+        <!-- /.row -->
+
+                </div>
+            </section>
+
+
+
+
+
+
+
+
+
+            <!-- Main content -->
+        </div>
+        <!-- /.content-wrapper -->
+
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-            <p>
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | SeedSchool
-					</p>
+                <b>Version</b> 3.0.5
             </div>
-            
+            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            reserved.
         </footer>
 
         <!-- Control Sidebar -->
