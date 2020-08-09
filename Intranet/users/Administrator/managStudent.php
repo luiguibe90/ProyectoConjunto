@@ -104,7 +104,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                with font-awesome or any other icon font library -->
 
                <li class="nav-item">
-                            <a href="widgets.html" class="nav-link active">
+                            <a href="index.php" class="nav-link active">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Inicio
@@ -122,7 +122,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
+                                    <a href="./managTeacher.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Profesores</p>
                                     </a>
@@ -165,9 +165,8 @@ $countTeachers =$administratorService->countTypePeople(3);
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                                <li class="breadcrumb-item"><a href="#">Layou t</a></li>
-                                <li class="breadcrumb-item active">DashBoard</li>
+                                <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
+                                <li class="breadcrumb-item active">GestiónAlumno</li>
                             </ol>
                         </div>
                     </div>
@@ -184,7 +183,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                             <div class="icon">
                                 <i class="fa fa-list red-bg"></i>
                             </div>
-                            <a href="../classes/index.html" class="small-box-footer">ir <i
+                            <a href="viewStudent.php" class="small-box-footer">ir <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>

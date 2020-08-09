@@ -123,7 +123,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
+                                    <a href="./managTeacher.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Profesores</p>
                                     </a>
@@ -141,7 +141,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
+                                    <a href="./managAspirant.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aspirantes</p>
                                     </a>
@@ -166,8 +166,6 @@ $countTeachers =$administratorService->countTypePeople(3);
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                                <li class="breadcrumb-item"><a href="#">Layou t</a></li>
                                 <li class="breadcrumb-item active">DashBoard</li>
                             </ol>
                         </div>
@@ -180,12 +178,12 @@ $countTeachers =$administratorService->countTypePeople(3);
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3><?php echo $countAlumns ?></h3>
-                                <p>Estudiantes</p>
+                                <p>Alumnos</p>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-users red-bg"></i>
                             </div>
-                            <a href="../classes/index.html" class="small-box-footer">ir <i
+                            <a href="" class="small-box-footer">ir <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
