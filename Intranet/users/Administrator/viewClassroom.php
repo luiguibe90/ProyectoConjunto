@@ -5,9 +5,8 @@ if (!isset($_SESSION['USU'])) {
 }
 
 include '../../service/administratorService.php';
-$administratorService = new administratorService();
-$countAlumns = $administratorService->countTypePeople(1);
-$countTeachers =$administratorService->countTypePeople(3);
+include '../../service/studentService.php';
+$studentService = new studentService();
 
 ?>
 
@@ -141,7 +140,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./managAspirant.php" class="nav-link">
+                                    <a href="../../index3.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aspirantes</p>
                                     </a>
@@ -180,7 +179,6 @@ $countTeachers =$administratorService->countTypePeople(3);
                             </ul>
                         </li>
 
-
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
@@ -194,52 +192,70 @@ $countTeachers =$administratorService->countTypePeople(3);
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Dashboard</h1>
+                            <h1>Visualizar Aulas</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">DashBoard</li>
+                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="managClassrooms.php">GestionAulas</a></li>
+                                <li class="breadcrumb-item active">VisualizarAulas</li>
                             </ol>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
-
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countAlumns ?></h3>
-                                <p>Alumnos</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-users red-bg"></i>
-                            </div>
-                            <a href="" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countTeachers ?></h3>
-                                <p>Docentes</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-users red-bg"></i>
-                            </div>
-                            <a href="../classes/index.html" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
             </section>
 
+            <section class="content">
+                <div class="container-fluid">
+<!-- /.row -->
+<div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Listado Aulas</h3>
 
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Cod_Aula</th>
+                      <th>Nombre</th>
+                      <th>Capacidad</th>
+                      <th>Tipo</th>
+                      <th>Piso</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                         
+                         
+                         
+                    ?>
 
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
 
-
-
+                </div>
+            </section>
 
 
             <!-- Main content -->

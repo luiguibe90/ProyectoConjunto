@@ -1,13 +1,24 @@
 <?php
 session_start();
 if (!isset($_SESSION['USU'])) {
-  header('Location: ../../../Seed/login.html');
+    header('Location: ../../../Seed/login.html');
 }
 
 include '../../service/administratorService.php';
-$administratorService = new administratorService();
-$countAlumns = $administratorService->countTypePeople(1);
-$countTeachers =$administratorService->countTypePeople(3);
+include '../../service/teacherService.php';
+$teacherService = new teacherService();
+if (isset($_POST["btn_subR"])) {
+    $teacherService->insertPeopleTeacher(
+        $_POST["cedRepresentantive"],
+        $_POST["snRepresentative"],
+        $_POST["nameRepresentative"],
+        $_POST["addressRepresentative"],
+        $_POST["telfRepresentative"],
+        $_POST["dateBrhRepresentative"],
+        $_POST["genderR"],
+        $_POST["pemailRepresentative"]
+    );
+}
 
 ?>
 
@@ -64,8 +75,7 @@ $countTeachers =$administratorService->countTypePeople(3);
             <!-- SEARCH FORM -->
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                        aria-label="Search">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
                             <i class="fas fa-search"></i>
@@ -91,16 +101,15 @@ $countTeachers =$administratorService->countTypePeople(3);
                         <img src="../../dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
-                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
-                        <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
+                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
+                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
+                        <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
                     </div>
                 </div>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
@@ -179,14 +188,9 @@ $countTeachers =$administratorService->countTypePeople(3);
                                 
                             </ul>
                         </li>
-
-
                 </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
         </aside>
-
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -194,71 +198,70 @@ $countTeachers =$administratorService->countTypePeople(3);
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Dashboard</h1>
+                            <h1>Gestión Edificio</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">DashBoard</li>
+                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="managedifice.php">Gestión Edificio</a></li>
+                                <li class="breadcrumb-item active">Eliminar Edificio</li>
                             </ol>
                         </div>
                     </div>
-                </div><!-- /.container-fluid -->
-
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countAlumns ?></h3>
-                                <p>Alumnos</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-users red-bg"></i>
-                            </div>
-                            <a href="" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countTeachers ?></h3>
-                                <p>Docentes</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-users red-bg"></i>
-                            </div>
-                            <a href="../classes/index.html" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
+                </div>
             </section>
 
-
-
-
-
-
-
-
-
-            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Eliminar Edificio:</h3>
+                                </div>
+                                <form role="form" data-toggle="validator" method="post">
+                                    <div class="card-body">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Datos del Edificio:</h3>
+                                        </div>
+                                     
+                                            <label for="Granados"> Seleccione La Sede: </label><!--debe selecionar la sede a la que pertenece el edificio-->
+                                            <select name="campus" class="form-control">
+                                            <?php
+                                            
+                                            ?>
+                                            </select>
+                                            
+                                            <label for="Granados"> Seleccione el Edificio: </label><!--debe selecionar el edificio al que pertenece a la Sede selecionada anteriormente-->
+                                            <select name="campus" class="form-control">
+                                                                   
+                                    </div>
+                                    <div class="card-footer">
+                                        <button name="btn_subR" type="submit" class="btn btn-primary">Eliminar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <!-- /.content-wrapper -->
-
-        <footer class="main-footer">
+    </div>
+    <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.5
+            <p>
+						Copyright &copy;
+						<script>document.write(new Date().getFullYear());</script> All rights reserved | SeedSchool
+					</p>
             </div>
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
+            
         </footer>
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
 
@@ -268,7 +271,7 @@ $countTeachers =$administratorService->countTypePeople(3);
     <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -5,9 +5,23 @@ if (!isset($_SESSION['USU'])) {
 }
 
 include '../../service/administratorService.php';
-$administratorService = new administratorService();
-$countAlumns = $administratorService->countTypePeople(1);
-$countTeachers =$administratorService->countTypePeople(3);
+include '../../service/studentService.php';
+$studentService = new studentService();
+
+if (isset($_POST["btn_subR"])) {
+
+    $studentService->insertPeopleRepresentative($_POST["cedRepresentantive"], $_POST["snRepresentative"],
+    $_POST["nameRepresentative"],$_POST["addressRepresentative"],$_POST["telfRepresentative"],
+    $_POST["dateBrhRepresentative"],$_POST["genderR"],$_POST["pemailRepresentative"]);
+    
+
+} elseif (isset($_POST["btn_subA"])){
+    echo("<script>console.log('PHP: pass btnA');</script>");
+    $studentService->insertPeopleAlumn($_POST["cedAlumn"],$_POST["snameAlumn"],
+    $_POST["nameAlumn"],$_POST["addreAlumn"],$_POST["telefAlumn"],$_POST["dateBirthAlumn"],
+    $_POST["genderA"],$_POST["emailpAlumn"]);
+    
+}
 
 ?>
 
@@ -54,7 +68,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./index3.html" class="nav-link">Inicio</a>
+                <a href="../../login/logout.php" class="nav-link">salir</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -104,7 +118,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-                        <li class="nav-item">
+               <li class="nav-item">
                             <a href="index.php" class="nav-link active">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
@@ -180,7 +194,6 @@ $countTeachers =$administratorService->countTypePeople(3);
                             </ul>
                         </li>
 
-
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
@@ -194,71 +207,149 @@ $countTeachers =$administratorService->countTypePeople(3);
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Dashboard</h1>
+                            <h1>Gestion Aula</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item active">DashBoard</li>
+                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="managClassroom.php">Gestion Aula</a></li>
+                                <li class="breadcrumb-item active">Modificar Aula</li>
                             </ol>
                         </div>
+
+
                     </div>
+
+
                 </div><!-- /.container-fluid -->
 
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countAlumns ?></h3>
-                                <p>Alumnos</p>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Formulario Aula a Modificar:</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <form id="formRepresentative" role="form" action=""  data-toggle="validator" method="post"  >
+                                    <div class="card-body">
+                                        
+                                        <label for="Granados"> Seleccione La Sede: </label><!--debe selecionar la sede a la que pertenece el edificio-->
+                                            <select name="campus" class="form-control">
+                                            
+                                            </select>
+                                            
+                                            <label for="Granados"> Seleccione el Edificio: </label><!--debe selecionar el edificio al que pertenece el aula y desplegarse los edificios que en la sede seleccionada anteriormente-->
+                                            <select name="campus" class="form-control">
+                                            
+
+                                            </select>
+                                            
+                                            
+                                            <label for="Granados"> Seleccione el Aula: </label><!--debe selecionar el edificio al que pertenece el aula y desplegarse los edificios que en la sede seleccionada anteriormente-->
+                                            <select name="campus" class="form-control">
+                                            <!--Se deben llenar los datos al selecionar el aula-->
+
+                                            </select>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Nombre Aula</label>
+                                            <input type="text" class="form-control" id="exampleText" name="nameAula" placeholder="Ingrese Nombre">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Capacidad</label>
+                                            <input type="text" class="form-control" id="exampleText" name="capAula" placeholder="Ingrese la capacidad del Aula" maxlength="10">
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                            <label for="aulaProfesores">Tipo</label>
+                                            <input type="text" class="form-control" id="exampleText" name="capTipo" placeholder="Ingrese el Tipo de Aula" >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Piso</label>
+                                            <input type="text" class="form-control" id="exampleText" name="Piso" placeholder="Ingrese el piso en que se encuentra la Aula" >
+                                        </div>
+                                        
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                    
+                                </form>
                             </div>
-                            <div class="icon">
-                                <i class="fa fa-users red-bg"></i>
-                            </div>
-                            <a href="" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countTeachers ?></h3>
-                                <p>Docentes</p>
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Formulario Datos Nuevos Aula:</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                
+                                <form role="form" id="formAlumn"  action="" data-toggle="validator" method="post" >
+                                    <div class="card-body">
+                                        <div class="card-header">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Nombre Aula</label>
+                                            <input type="text" class="form-control" id="exampleText" name="nameAula" placeholder="Ingrese Nombre">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Capacidad</label>
+                                            <input type="text" class="form-control" id="exampleText" name="capAula" placeholder="Ingrese la capacidad del Aula" maxlength="10">
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                            <label for="aulaProfesores">Tipo</label>
+                                            <input type="text" class="form-control" id="exampleText" name="capTipo" placeholder="Ingrese el Tipo de Aula" >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Piso</label>
+                                            <input type="text" class="form-control" id="exampleText" name="Piso" placeholder="Ingrese el piso en que se encuentra la Aula" >
+                                        </div>
+
+                                        <div class="card-footer">
+                                        <button name="btn_subR" type="submit" class="btn btn-primary">Modificar</button>
+                                    </div>
+
+
                             </div>
-                            <div class="icon">
-                                <i class="fa fa-users red-bg"></i>
-                            </div>
-                            <a href="../classes/index.html" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            
                         </div>
+
                     </div>
+
+                </div>
+
+
             </section>
 
 
-
-
-
-
-
-
-
-            <!-- Main content -->
         </div>
-        <!-- /.content-wrapper -->
 
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.5
-            </div>
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
-        </footer>
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
+        <!-- Main content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 3.0.5
+        </div>
+        <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+        reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
 
