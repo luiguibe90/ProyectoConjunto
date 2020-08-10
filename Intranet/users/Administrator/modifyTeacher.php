@@ -161,111 +161,109 @@ $studentService = new studentService();
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Visualizar Docentes</h1>
+                            <h1>Editar Docente</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
                                 <li class="breadcrumb-item"><a href="managTeacher.php">GestionDocentes</a></li>
-                                <li class="breadcrumb-item active">VisualizarDocentes</li>
+                                <li class="breadcrumb-item active">EditarDocente</li>
                             </ol>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
 
-            <section class="content">
-                <div class="container-fluid">
-                    <!-- /.row -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Listado Alumnos</h3>
+            <?php
+        $mysql = new mysqli("sschoodb.mysql.database.azure.com", "adminschoolar@sschoodb", "Admin+123", "schoolardb");
+        if ($mysql->connect_error)
+            die("Problemas con la conexión a la base de datos");
 
-                                    <div class="card-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px;">
-                                            <input type="text" name="table_search" class="form-control float-right"
-                                                placeholder="Search">
+        $registro = $mysql->query("select CEDULA,APELLIDO,NOMBRE,DIRECCION,TELEFONO,FECHA_NACIMIENTO,GENERO,CORREO,CORREO_PERSONAL from persona where COD_PERSONA=$_REQUEST[codigo]") or
+            die($mysql->error);
 
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-default"><i
-                                                        class="fas fa-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body table-responsive p-0">
-                                    <table class="table table-hover text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Cod_Docente</th>
-                                                <th>Cedula</th>
-                                                <th>Apellido</th>
-                                                <th>Nombre</th>
-                                                <th>Dirección</th>
-                                                <th>Teléfono</th>
-                                                <th>FechaNacimiento</th>
-                                                <th>Genero</th>
-                                                <th>Correo</th>
-                                                <th>CorreoPersonal</th>
-                                                <th>Estado</th>
-                                                <th>FechaInicio</th>
-                                                <th>FechaFinal</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                    $result= $studentService->showPeople(3);
-                    while($alumn = mysqli_fetch_array($result))
-                    {
-                    echo "<tr>";
-                    echo "<td>" . $alumn['COD_PERSONA'] . "</td>";
-                    echo "<td>" . $alumn['CEDULA'] . "</td>";
-                    echo "<td>" . $alumn['APELLIDO'] . "</td>";
-                    echo "<td>" . $alumn['NOMBRE'] . "</td>";
-                    echo "<td>" . $alumn['DIRECCION'] . "</td>";
-                    echo "<td>" . $alumn['TELEFONO'] . "</td>";
-                    echo "<td>" . $alumn['FECHA_NACIMIENTO'] . "</td>";
-                    echo "<td>" . $alumn['GENERO'] . "</td>";
-                    echo "<td>" . $alumn['CORREO'] . "</td>";
-                    echo "<td>" . $alumn['CORREO_PERSONAL'] . "</td>";
-                    echo "<td>" . $alumn['ESTADO'] . "</td>";
-                    echo "<td>" . $alumn['FECHA_INICIO'] . "</td>";
-                    echo "<td>" . $alumn['FECH_FIN'] . "</td>";
-                    ?>
-                                            <td>
-                                                <a href="modifyTeacher.php?codigo='<?php echo $alumn['COD_PERSONA']?>'"
-                                                    title="Editar datos" class="btn btn-primary btn-sm"><span
-                                                        class="far fa-edit fa-lg" aria-hidden="true"></span></a>
-                                            </td>
-                                            <?php
-                    echo "</tr>"; 
-                    }                    
-                    ?>
+        if ($reg = $registro->fetch_array()) {
+        ?>
+            <div class="row d-flex justify-content-center" class="justify-content-center">
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
+                <div class="col-sm-10 col-sm offset-1">
+                    <form method="post" action="modTeacher2.php">
+                        <!---CEDULA-->
+                        <br> <label style="font-weight: bold;">CI del Docente:</label>
+                        <input type="text" class="form-control" name="cedula" size="50"
+                            value="<?php echo $reg['CEDULA']; ?>">
+                        <br>
+                        <!---APELLIDO-->
+                        <br> <label style="font-weight: bold;">Apellido del Docente:</label>
+                        <input type="text" class="form-control" name="apellido" size="50"
+                            value="<?php echo $reg['APELLIDO']; ?>">
+                        <br>
+
+                        <!---NOMBRE-->
+                        <br> <label style="font-weight: bold;">Nombre del Docente:</label>
+                        <input type="text" class="form-control" name="nombre" size="50"
+                            value="<?php echo $reg['NOMBRE']; ?>">
+                        <br>
+
+                        <!---DIRECCION-->
+                        <br> <label style="font-weight: bold;">Dirección del Docente:</label>
+                        <input type="text" class="form-control" name="direccion" size="50"
+                            value="<?php echo $reg['DIRECCION']; ?>">
+                        <br>
+
+                        <!--TELEFONO-->
+                        <label style="font-weight: bold;">Teléfono Docente:</label>
+                        <input type="text" class="form-control" name="telefono" size="10"
+                            value="<?php echo $reg['TELEFONO']; ?>">
+                        <br>
+
+                        <!--FECHA NACIMIENTO-->
+                        <label style="font-weight: bold;">Fecha nacimiento</label>
+                        <input type="date" class="form-control" name="date" size="10"
+                            placeholder="Seleccione Fecha de Nacimiento"
+                            value="<?php echo $reg['FECHA_NACIMIENTO']; ?>">
+                        <br>
+
+                        <!--GENERO
+                        AUN HAY QUE VER QUE SELECCIONE CORRECTAMENTE EL GENERO-->
+                        <label style="font-weight: bold;">Genero:</label> <br>
+                        <input type="radio" name="genero" id="male" value="MAS">
+                        <label for="male">Masculino</label><br>
+                        <input type="radio" id="female" name="genero" value="FEM">
+                        <label for="female">Femenino</label>
+
+                        <br>
+
+                        <!--CORREO-->
+                        <label style="font-weight: bold;">Correo:</label>
+                        <input type="text" class="form-control" name="mail" size="10"
+                            value="<?php echo $reg['CORREO']; ?>">
+                        <br>
+
+                        <!--CORREOPERSONAL-->
+                        <label style="font-weight: bold;">Correo Personal:</label>
+                        <input type="text" class="form-control" name="email" size="10"
+                            value="<?php echo $reg['CORREO_PERSONAL']; ?>">
+                        <br>
+
+                        <!--BOTON ENVIAR-->
+                        <input type="hidden" name="codigo" value="<?php echo $_REQUEST['codigo']; ?>">
+                        <br> <br>
+                        <div class="col text-center">
+                            <input type="submit" class="btn btn-danger" value="Confirmar">
                         </div>
-                    </div>
-                    <!-- /.row -->
+                        <br>
+                    </form>
 
                 </div>
-            </section>
+            </div>
+            <?php
+        } else
+            echo 'No existe un artículo con dicho código';
 
+        $mysql->close();
 
-
-
-
-
-
-
+        ?>
 
             <!-- Main content -->
         </div>
