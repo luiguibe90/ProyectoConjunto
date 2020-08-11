@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['USU'])) {
-  header('Location: ../../../Seed/login.html');
+    header('Location: ../../../Seed/login.html');
 }
 
 include '../../service/administratorService.php';
@@ -46,33 +46,7 @@ $studentService = new studentService();
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./index3.html" class="nav-link">Inicio</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </nav>
+        <?php include("../../views/barNav.php");?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -90,65 +64,14 @@ $studentService = new studentService();
                         <img src="../../dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
-                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
-                        <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
+                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
+                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
+                        <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
                     </div>
                 </div>
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-                        <li class="nav-item">
-                            <a href="index.php" class="nav-link active">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Inicio
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-header">Gestionar</li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="fa fa-users red-bg"></i>
-                                <p>
-                                    Personas
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./managTeacher.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Profesores</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./managStudent.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Alumnos</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Representantes</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Aspirantes</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                </nav>
+                <?php include("../../views/menuAdmin.php");?>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
@@ -176,99 +99,82 @@ $studentService = new studentService();
 
             <section class="content">
                 <div class="container-fluid">
-<!-- /.row -->
-<div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Listado Alumnos</h3>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Listado Alumnos</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Cod_Alumno</th>
+                                                <th>Cedula</th>
+                                                <th>Apellido</th>
+                                                <th>Nombre</th>
+                                                <th>Dirección</th>
+                                                <th>Teléfono</th>
+                                                <th>FechaNacimiento</th>
+                                                <th>Genero</th>
+                                                <th>Correo</th>
+                                                <th>CorreoPersonal</th>
+                                                <th>Estado</th>
+                                                <th>FechaInicio</th>
+                                                <th>FechaFinal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $result = $studentService->showPeople(1);
+                                            while ($alumn = mysqli_fetch_array($result)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $alumn['COD_PERSONA'] . "</td>";
+                                                echo "<td>" . $alumn['CEDULA'] . "</td>";
+                                                echo "<td>" . $alumn['APELLIDO'] . "</td>";
+                                                echo "<td>" . $alumn['NOMBRE'] . "</td>";
+                                                echo "<td>" . $alumn['DIRECCION'] . "</td>";
+                                                echo "<td>" . $alumn['TELEFONO'] . "</td>";
+                                                echo "<td>" . $alumn['FECHA_NACIMIENTO'] . "</td>";
+                                                echo "<td>" . $alumn['GENERO'] . "</td>";
+                                                echo "<td>" . $alumn['CORREO'] . "</td>";
+                                                echo "<td>" . $alumn['CORREO_PERSONAL'] . "</td>";
+                                                echo "<td>" . $alumn['ESTADO'] . "</td>";
+                                                echo "<td>" . $alumn['FECHA_INICIO'] . "</td>";
+                                                echo "<td>" . $alumn['FECH_FIN'] . "</td>";
+
+                                                echo "</tr>";
+                                            }
+                                            ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th>Cod_Alumno</th>
-                      <th>Cedula</th>
-                      <th>Apellido</th>
-                      <th>Nombre</th>
-                      <th>Dirección</th>
-                      <th>Teléfono</th>
-                      <th>FechaNacimiento</th>
-                      <th>Genero</th>
-                      <th>Correo</th>
-                      <th>CorreoPersonal</th>
-                      <th>Estado</th>
-                      <th>FechaInicio</th>
-                      <th>FechaFinal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    $result= $studentService->showPeople(1);
-                    while($alumn = mysqli_fetch_array($result))
-                    {
-                    echo "<tr>";
-                    echo "<td>" . $alumn['COD_PERSONA'] . "</td>";
-                    echo "<td>" . $alumn['CEDULA'] . "</td>";
-                    echo "<td>" . $alumn['APELLIDO'] . "</td>";
-                    echo "<td>" . $alumn['NOMBRE'] . "</td>";
-                    echo "<td>" . $alumn['DIRECCION'] . "</td>";
-                    echo "<td>" . $alumn['TELEFONO'] . "</td>";
-                    echo "<td>" . $alumn['FECHA_NACIMIENTO'] . "</td>";
-                    echo "<td>" . $alumn['GENERO'] . "</td>";
-                    echo "<td>" . $alumn['CORREO'] . "</td>";
-                    echo "<td>" . $alumn['CORREO_PERSONAL'] . "</td>";
-                    echo "<td>" . $alumn['ESTADO'] . "</td>";
-                    echo "<td>" . $alumn['FECHA_INICIO'] . "</td>";
-                    echo "<td>" . $alumn['FECH_FIN'] . "</td>";
-
-                    echo "</tr>"; 
-                    }                    
-                    ?>
-
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-        <!-- /.row -->
+                    <!-- /.row -->
 
                 </div>
             </section>
-
-
-
-
-
-
-
-
-
             <!-- Main content -->
         </div>
         <!-- /.content-wrapper -->
-
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.5
-            </div>
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
-        </footer>
+        <?php include("../../views/footer.php"); ?>
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -284,7 +190,7 @@ $studentService = new studentService();
     <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

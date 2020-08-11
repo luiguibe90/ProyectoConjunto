@@ -1,13 +1,13 @@
 <?php
 session_start();
 if (!isset($_SESSION['USU'])) {
-  header('Location: ../../../Seed/login.html');
+    header('Location: ../../../Seed/login.html');
 }
 
 include '../../service/administratorService.php';
 $administratorService = new administratorService();
 $countAlumns = $administratorService->countTypePeople(1);
-$countTeachers =$administratorService->countTypePeople(3);
+$countTeachers = $administratorService->countTypePeople(3);
 ?>
 
 <!DOCTYPE html>
@@ -46,33 +46,7 @@ $countTeachers =$administratorService->countTypePeople(3);
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./index3.html" class="nav-link">Inicio</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </nav>
+        <?php include("../../views/barNav.php"); ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -90,65 +64,14 @@ $countTeachers =$administratorService->countTypePeople(3);
                         <img src="../../dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
-                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
-                        <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
+                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
+                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
+                        <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
                     </div>
                 </div>
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-               <li class="nav-item">
-                            <a href="index.php" class="nav-link active">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Inicio
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-header">Gestionar</li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="fa fa-users red-bg"></i>
-                                <p>
-                                    Personas
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./managTeacher.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Profesores</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./managStudent.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Alumnos</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Representantes</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Aspirantes</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                </nav>
+                <?php include("../../views/menuAdmin.php"); ?>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
@@ -183,8 +106,7 @@ $countTeachers =$administratorService->countTypePeople(3);
                             <div class="icon">
                                 <i class="fa fa-list red-bg"></i>
                             </div>
-                            <a href="viewTeacher.php" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="viewTeacher.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6">
@@ -196,22 +118,12 @@ $countTeachers =$administratorService->countTypePeople(3);
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="addTeacher.php" class="small-box-footer">ir <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="addTeacher.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-            </section>            
+            </section>
         </div>
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-            <p>
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | SeedSchool
-					</p>
-            </div>
-            
-        </footer>
-
+        <?php include("../../views/footer.php"); ?>
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
@@ -226,7 +138,7 @@ $countTeachers =$administratorService->countTypePeople(3);
     <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

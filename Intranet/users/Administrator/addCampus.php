@@ -6,31 +6,34 @@ if (!isset($_SESSION['USU'])) {
 
 include '../../service/infraestructuraService.php';
 $infraestructura = new infraestructuraService();
-    $sede="sede";
-    $edificio="edificio";
-    $aula="aula";
-    $codCampus="";
-    $nameCampus="";
-    $addressCampus="";
-    $telefCampus="";
-    $postCampus="";
-    $codigoAula = "";
-    $nombreAula="";
-    $capacidadAula="";
-    $pisoAula="";
-    $codigoEdificio="";
-    $nombreEdificio="";
-    $cantidadPisos="";
-    $accion="Añadir";
-    $mensajeSede="Registrar Nueva Sede";
-    $mensaje="Registro de Nueva Aula";
-    $mensajeEdificios = "Registro de nuevo Edificio";
+$sede = "sede";
+$edificio = "edificio";
+$aula = "aula";
+$codCampus = "";
+$nameCampus = "";
+$addressCampus = "";
+$telefCampus = "";
+$postCampus = "";
+$codigoAula = "";
+$nombreAula = "";
+$capacidadAula = "";
+$pisoAula = "";
+$codigoEdificio = "";
+$nombreEdificio = "";
+$cantidadPisos = "";
+$accion = "Añadir";
+$mensajeSede = "Registrar Nueva Sede";
+$mensaje = "Registro de Nueva Aula";
+$mensajeEdificios = "Registro de nuevo Edificio";
 
-if(isset($_POST["btn_subR"]))
-    {
-        $infraestructura->insertarSede($_POST["nameCampus"],$_POST["addressCampus"],$_POST["telefCampus"],
-                                       $_POST["postCampus"]); 
-    }
+if (isset($_POST["btn_subR"])) {
+    $infraestructura->insertarSede(
+        $_POST["nameCampus"],
+        $_POST["addressCampus"],
+        $_POST["telefCampus"],
+        $_POST["postCampus"]
+    );
+}
 
 ?>
 
@@ -70,32 +73,7 @@ if(isset($_POST["btn_subR"]))
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./index3.html" class="nav-link">Inicio</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
-                </li>
-            </ul>
-
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </nav>
+        <?php include("../../views/barNav.php"); ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -120,87 +98,7 @@ if(isset($_POST["btn_subR"]))
                 </div>
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-                        <li class="nav-item">
-                            <a href="index.php" class="nav-link active">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Inicio
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-header">Gestionar</li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="fa fa-users red-bg"></i>
-                                <p>
-                                    Personas
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="./managTeacher.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Profesores</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./managStudent.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Alumnos</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Representantes</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./managAspirant.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Aspirantes</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-header">Gestionar</li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="fa fa-users red-bg"></i>
-                                <p>
-                                    Infraestructura
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="managClassrooms.php" class="nav-link"><!--crud aulas-->
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Aulas</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="managEdifice.php" class="nav-link"><!--crud edificios-->
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Edificios</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="managCampus.php" class="nav-link"><!--crud sedes-->
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Sedes</p>
-                                    </a>
-                                </li>
-                                
-                            </ul>
-                        </li>
-                </nav>
+                <?php include("../../views/menuAdmin.php"); ?>
             </div>
         </aside>
         <!-- Content Wrapper. Contains page content -->
@@ -231,7 +129,7 @@ if(isset($_POST["btn_subR"]))
                                 <div class="card-header">
                                     <h3 class="card-title">Formulario Sede:</h3>
                                 </div>
-                                <form id="formCampus" role="form" action=""  data-toggle="validator" method="post"  >
+                                <form id="formCampus" role="form" action="" data-toggle="validator" method="post">
                                     <div class="card-body">
                                         <div class="card-header">
                                             <h3 class="card-title">Datos Sede:</h3>
@@ -244,22 +142,19 @@ if(isset($_POST["btn_subR"]))
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Dirección Sede</label>
-                                            <input type="text" class="form-control" id="exampleText"
-                                            name="addressCampus"    placeholder="Ingrese dirección de  sede" required>
+                                            <input type="text" class="form-control" id="exampleText" name="addressCampus" placeholder="Ingrese dirección de  sede" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Teléfono Sede</label>
-                                            <input type="text" class="form-control" id="exampleText"
-                                            name="telefCampus"  placeholder="Ingrese  Teléfono de  Sede" required>
+                                            <input type="text" class="form-control" id="exampleText" name="telefCampus" placeholder="Ingrese  Teléfono de  Sede" required>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Código Postal</label>
-                                            <input type="text" class="form-control" id="exampleText"
-                                            name="postCampus"  placeholder="Ingrese código postal de Sede" required>
+                                            <input type="text" class="form-control" id="exampleText" name="postCampus" placeholder="Ingrese código postal de Sede" required>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="card-footer">
                                         <button name="btn_subR" type="submit" class="btn btn-primary">Guardar</button>
@@ -272,15 +167,7 @@ if(isset($_POST["btn_subR"]))
             </section>
         </div>
     </div>
-    <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-            <p>
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | SeedSchool
-					</p>
-            </div>
-            
-        </footer>
+    <?php include("../../views/footer.php"); ?>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
