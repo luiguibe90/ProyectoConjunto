@@ -51,7 +51,6 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
     $infraestructura->eliminarEdificio($_GET['eliminarEdificio']);
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -146,7 +145,7 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
 
             <section class="content">
                 <div class="container-fluid">
-                    <form action="" name="aulas" id="aulas" method="post">
+                    <form action="" name="edificio" id="edificio" method="post">
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
                                 <thead>
