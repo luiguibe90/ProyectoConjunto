@@ -1,5 +1,10 @@
 <?php
-	$mysql=new mysqli("sschoodb.mysql.database.azure.com", "adminschoolar@sschoodb", "Admin+123", "schoolardb");
+  include '../../service/conexion.php';
+  
+  $con = new Connection();
+  
+  $mysql = $con->getConnection();
+
 	if ($mysql->connect_error)
     die("Problemas con la conexión a la base de datos");
   else
@@ -21,5 +26,5 @@
 	 
     $mysql->close();
 
-    header('Location:./viewTeacher.php');
+   header('Location:./viewTeacher.php');
   ?>
