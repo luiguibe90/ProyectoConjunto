@@ -5,37 +5,59 @@ if (!isset($_SESSION['USU'])) {
 }
 
 include '../../service/administratorService.php';
-include '../../service/studentService.php';
-$studentService = new studentService();
 
-if (isset($_POST["btn_subR"])) {
-
-    $studentService->insertPeopleRepresentative(
-        $_POST["cedRepresentantive"],
-        $_POST["snRepresentative"],
-        $_POST["nameRepresentative"],
-        $_POST["addressRepresentative"],
-        $_POST["telfRepresentative"],
-        $_POST["dateBrhRepresentative"],
-        $_POST["genderR"],
-        $_POST["pemailRepresentative"]
+$infraestructura = new infraestructuraService();
+$sede = "sede";
+$edificio = "edificio";
+$aula = "aula";
+$codigoSede = "";
+$nombreSede = "";
+$direccionSede = "";
+$telefonoSede = "";
+$codPostalSede = "";
+$codigoAula = "";
+$nombreAula = "";
+$capacidadAula = "";
+$pisoAula = "";
+$codigoEdificio = "";
+$nombreEdificio = "";
+$cantidadPisos = "";
+$accion = "Añadir";
+$mensajeSede = "Registrar Nueva Sede";
+$mensaje = "Registro de Nueva Aula";
+$mensajeEdificios = "Registro de nuevo Edificio";
+//SEDE
+if (isset($_POST['accionSede']) && ($_POST['accionSede'] == 'Añadir')) {
+    $infraestructura->insertarSede(
+        $_POST['codigo_sede'],
+        $_POST['nombre_sede'],
+        $_POST['direccion_sede'],
+        $_POST['telefono_sede'],
+        $_POST['cod_postal_sede']
     );
-} elseif (isset($_POST["btn_subA"])) {
-    echo ("<script>console.log('PHP: pass btnA');</script>");
-    $studentService->insertPeopleAlumn(
-        $_POST["cedAlumn"],
-        $_POST["snameAlumn"],
-        $_POST["nameAlumn"],
-        $_POST["addreAlumn"],
-        $_POST["telefAlumn"],
-        $_POST["dateBirthAlumn"],
-        $_POST["genderA"],
-        $_POST["emailpAlumn"]
+} else if (isset($_POST["accionSede"]) && ($_POST["accionSede"] == "Modificar")) {
+    $infraestructura->modificarSede(
+        $_POST['codigo_sede'],
+        $_POST['nombre_sede'],
+        $_POST['direccion_sede'],
+        $_POST['telefono_sede'],
+        $_POST['cod_postal_sede'],
+        $_POST['codigo_sede_comparar']
     );
+} else if (isset($_GET["modificarSede"])) {
+    $result = $infraestructura->encontrarSede($_GET['modificarSede']);
+    if ($result != null) {
+        $codigoSede = $result['COD_SEDE'];
+        $nombreSede = $result['NOMBRE'];
+        $direccionSede = $result['DIRECCION'];
+        $telefonoSede = $result['TELEFONO'];
+        $codPostalSede = $result['CODIGO_POSTAL'];
+        $mensajeSede = "Modificar datos de la Sede";
+        $accion = "Modificar";
+    }
 }
 
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -72,7 +94,7 @@ if (isset($_POST["btn_subR"])) {
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <?php include("../../views/barNav.php");?>
+        <?php include("../../views/barNav.php"); ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -126,6 +148,93 @@ if (isset($_POST["btn_subR"])) {
 
                 </div><!-- /.container-fluid -->
 
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <form action="" name="aulas" id="aulas" method="post">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Código Sede</th>
+                                        <th>Nombre</th>
+                                        <th>Cantidad de Pisos</th>
+                                        <th>Actualizar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $result = $infraestructura->mostrarInfraestructura($edificio);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $row["COD_EDIFICIO"]; ?></td>
+                                                <td><?php echo $row["COD_SEDE"]; ?></td>
+                                                <td><?php echo $row["NOMBRE"]; ?></td>
+                                                <td><?php echo $row["CANTIDAD_PISOS"]; ?></td>
+                                                <td>
+                                                    <div>
+                                                        <a href="modifyEdifice.php?modificarEdificio=<?php echo $row["COD_EDIFICIO"]; ?>#edificiosForm" class="btn btn-success" type="button">
+                                                            <i class="zmdi zmdi-refresh"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php   }
+                                    } else {
+                                        ?>
+                                        <tr>
+                                            <td>No hay datos en la tabla</td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Modificar Edificio</h3>
+                                    </div>
+                                    <div style="margin-left: 14px;">
+                                    </div>
+                                    <div class="row container-flat-form">
+                                        <div class="card-body">
+                                            <input type="hidden" name="codigo_edificio_comparar" value="<?php echo $codigoEdificio ?>">
+                                            <div class="form-group" id="aulasForm">
+                                                <label for="exampleInputEmail1">Codigo Edificio</label>
+                                                <input type="text" class="form-control" placeholder="Código de Edificio" required="" data-toggle="tooltip" data-placement="top" title="Escriba el código del edificio" name="codigo_edificio" value="<?php echo $codigoEdificio ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Codigo Sede</label>
+                                                <select name="sede" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                                                    <?php
+                                                    $result3 = $infraestructura->mostrarInfraestructura($sede);
+                                                    foreach ($result3 as $opciones) :
+                                                    ?>
+                                                        <option value="<?php echo $opciones['COD_SEDE'] ?>"><?php echo $opciones['COD_SEDE'] ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nombre Edificio</label>
+                                                <input type="text" class="form-control" placeholder="Nombre del edificio" required="" data-toggle="tooltip" data-placement="top" title="Nombre del Edificio" name="nombre_edificio" value="<?php echo $nombreEdificio ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Cantidad Pisos</label>
+                                                <input type="text" class="form-control" placeholder="Cantidad de Pisos" required="" data-toggle="tooltip" data-placement="top" title="Escriba la cantidad de pisos" name="pisos" value="<?php echo $cantidadPisos ?>">
+
+                                            </div>
+                                            <p class="text-center">
+                                                <input type="submit" name="accionEdificios" value="Modificar" class="btn btn-primary" style="margin-right: 20px;">
+                                            </p>
+                                        </div>
+                                    </div>
+                    </form>
+                </div>
             </section>
 
             <section class="content">
@@ -229,7 +338,9 @@ if (isset($_POST["btn_subR"])) {
         <!-- Main content -->
     </div>
     <!-- /.content-wrapper -->
-    <?php include("../../views/footer.php"); ?>
+
+    <?php include("../../views/footer.php");?>
+
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->

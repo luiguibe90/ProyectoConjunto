@@ -4,27 +4,27 @@ if (!isset($_SESSION['USU'])) {
     header('Location: ../../../Seed/login.html');
 }
 include '../../service/infraestructuraService.php';
-   
-    $infraestructura = new infraestructuraService();
-    $sede="sede";
-    $edificio="edificio";
-    $aula="aula";
-    $codigoSede="";
-    $nombreSede="";
-    $direccionSede="";
-    $telefonoSede="";
-    $codPostalSede="";
-    $codigoAula = "";
-    $nombreAula="";
-    $capacidadAula="";
-    $pisoAula="";
-    $codigoEdificio="";
-    $nombreEdificio="";
-    $cantidadPisos="";
-    $accion="Añadir";
-    $mensajeSede="Registrar Nueva Sede";
-    $mensaje="Registro de Nueva Aula";
-    $mensajeEdificios = "Registro de nuevo Edificio";
+
+$infraestructura = new infraestructuraService();
+$sede = "sede";
+$edificio = "edificio";
+$aula = "aula";
+$codigoSede = "";
+$nombreSede = "";
+$direccionSede = "";
+$telefonoSede = "";
+$codPostalSede = "";
+$codigoAula = "";
+$nombreAula = "";
+$capacidadAula = "";
+$pisoAula = "";
+$codigoEdificio = "";
+$nombreEdificio = "";
+$cantidadPisos = "";
+$accion = "Añadir";
+$mensajeSede = "Registrar Nueva Sede";
+$mensaje = "Registro de Nueva Aula";
+$mensajeEdificios = "Registro de nuevo Edificio";
 //AULAS
 if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
     $infraestructura->insertarAula(
@@ -44,7 +44,10 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
         $_POST['tipo_aula'],
         $_POST['piso_aula'],
         $_POST['codigo_aula_comparar'],
-     );
+
+
+
+    );
 } else if (isset($_GET["modificarAula"])) {
     $result = $infraestructura->encontrarAula($_GET['modificarAula']);
     if ($result != null) {
@@ -97,7 +100,7 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <?php include("../../views/barNav.php");?>
+        <?php include("../../views/barNav.php"); ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -167,7 +170,7 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
                                         <th>Tipo</th>
                                         <th>Piso</th>
                                         <th>Actualizar</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -191,7 +194,7 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
                                                         </a>
                                                     </div>
                                                 </td>
-                                                
+
                                             </tr>
                                         <?php   }
                                     } else {
@@ -250,13 +253,13 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                            <label for="exampleInputEmail1">Piso Aula</label>
+                                                <label for="exampleInputEmail1">Piso Aula</label>
                                                 <input type="text" class="form-control" placeholder="Piso del aula" required="" data-toggle="tooltip" data-placement="top" title="Escriba el piso donde se encuentra el aula" name="piso_aula" value="<?php echo $pisoAula ?>">
-                                                
+
                                             </div>
                                             <p class="text-center">
-                                                <input type="submit" name="accionAula" value="<?php echo $accion ?>" class="btn btn-primary" style="margin-right: 20px;">
-                                                <button type="reset" class="btn btn-info"><i class="zmdi zmdi-roller"></i> &nbsp;&nbsp; Limpiar</button>
+                                                <input type="submit" name="accionAula" value="Modificar" class="btn btn-primary" style="margin-right: 20px;">
+                                                
                                             </p>
                                         </div>
                                     </div>
@@ -317,7 +320,9 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
     <!-- Main content -->
     </div>
     <!-- /.content-wrapper -->
-    <?php include("../../views/footer.php");?>
+    <?php include("../../views/footer.php");?>                                                  
+   
+
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->

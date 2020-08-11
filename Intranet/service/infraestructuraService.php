@@ -1,6 +1,7 @@
 <?php
 
 include_once 'mainService.php';
+
 class infraestructuraService extends mainService
 {
     function mostrarInfraestructura($nombreEntidad)
