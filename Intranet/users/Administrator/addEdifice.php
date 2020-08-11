@@ -4,22 +4,32 @@ if (!isset($_SESSION['USU'])) {
     header('Location: ../../../Seed/login.html');
 }
 
-include '../../service/administratorService.php';
-include '../../service/teacherService.php';
-$teacherService = new teacherService();
-if (isset($_POST["btn_subR"])) {
-    $teacherService->insertPeopleTeacher(
-        $_POST["cedRepresentantive"],
-        $_POST["snRepresentative"],
-        $_POST["nameRepresentative"],
-        $_POST["addressRepresentative"],
-        $_POST["telfRepresentative"],
-        $_POST["dateBrhRepresentative"],
-        $_POST["genderR"],
-        $_POST["pemailRepresentative"]
-    );
-}
+include '../../service/infraestructuraService.php';
+$infraestructura = new infraestructuraService();
+$sede = "sede";
+$edificio = "edificio";
+$aula = "aula";
+$codCampus = "";
+$nameCampus = "";
+$addressCampus = "";
+$telefCampus = "";
+$postCampus = "";
+$codigoAula = "";
+$nombreAula = "";
+$capacidadAula = "";
+$pisoAula = "";
+//$codigoEdificio = "";
+$nameEdificio = "";
+$canPisos = "";
+$accion = "Añadir";
+$mensajeSede = "Registrar Nueva Sede";
+$mensaje = "Registro de Nueva Aula";
+$mensajeEdificios = "Registro de nuevo Edificio";
 
+if(isset($_POST['btn_subR']))
+    {
+        $infraestructura->insertarEdificio($_POST['sede'],$_POST['nameEdificio'],$_POST['canPisos']);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -168,24 +178,27 @@ if (isset($_POST["btn_subR"])) {
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="managClassrooms.php" class="nav-link"><!--crud aulas-->
+                                    <a href="managClassrooms.php" class="nav-link">
+                                        <!--crud aulas-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="managEdifice.php" class="nav-link"><!--crud edificios-->
+                                    <a href="managEdifice.php" class="nav-link">
+                                        <!--crud edificios-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Edificios</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="managCampus.php" class="nav-link"><!--crud sedes-->
+                                    <a href="managCampus.php" class="nav-link">
+                                        <!--crud sedes-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sedes</p>
                                     </a>
                                 </li>
-                                
+
                             </ul>
                         </li>
                 </nav>
@@ -224,7 +237,18 @@ if (isset($_POST["btn_subR"])) {
                                         <div class="card-header">
                                             <h3 class="card-title">Datos edificio:</h3>
                                         </div>
-                                        
+                                        <div class="form-group">
+                                        <label for="exampleInputEmail1">Seleccione una Sede</label>
+                                            <!--debe selecionar la sede a la que pertenece el edificio-->
+                                            <select name="sede" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;"> 
+                                                <?php
+                                                $result2 = $infraestructura->mostrarInfraestructura($sede);
+                                                foreach ($result2 as $opciones) :
+                                                ?>
+                                                    <option value="<?php echo $opciones['COD_SEDE'] ?>"><?php echo $opciones['NOMBRE'] ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nombre edificio</label>
                                             <input type="text" class="form-control" id="exampleText" name="nameEdificio" placeholder="Ingrese Nombre del Edificio" required>
@@ -232,18 +256,10 @@ if (isset($_POST["btn_subR"])) {
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Cantidad Pisos</label>
-                                            <input type="text" class="form-control" id="exampleText"
-                                            name="canPisos"    placeholder="Ingrese la cantidad de pisos del edificio">
+                                            <input type="text" class="form-control" id="exampleText" name="canPisos" placeholder="Ingrese la cantidad de pisos del edificio">
                                         </div>
-
-                                        <label for="Granados"> Seleccione La Sede: </label><!--debe selecionar la sede a la que pertenece el edificio-->
-                                            <select name="campus" class="form-control">
-                                            <?php
-                                            
-                                            ?>
-                                            </select>
-                                       
                                         
+
                                     </div>
                                     <div class="card-footer">
                                         <button name="btn_subR" type="submit" class="btn btn-primary">Guardar</button>
@@ -257,14 +273,16 @@ if (isset($_POST["btn_subR"])) {
         </div>
     </div>
     <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
+        <div class="float-right d-none d-sm-block">
             <p>
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> All rights reserved | SeedSchool
-					</p>
-            </div>
-            
-        </footer>
+                Copyright &copy;
+                <script>
+                    document.write(new Date().getFullYear());
+                </script> All rights reserved | SeedSchool
+            </p>
+        </div>
+
+    </footer>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">

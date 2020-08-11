@@ -1,13 +1,32 @@
 <?php
 session_start();
 if (!isset($_SESSION['USU'])) {
-  header('Location: ../../../Seed/login.html');
+    header('Location: ../../../Seed/login.html');
 }
 
-include '../../service/administratorService.php';
-include '../../service/studentService.php';
-$studentService = new studentService();
+include '../../service/infraestructuraService.php';
+//include '../../service/studentService.php';
 
+$infraestructura = new infraestructuraService();
+$sede = "sede";
+$edificio = "edificio";
+$aula = "aula";
+$codigoSede = "";
+$nombreSede = "";
+$direccionSede = "";
+$telefonoSede = "";
+$codPostalSede = "";
+$codigoAula = "";
+$nombreAula = "";
+$capacidadAula = "";
+$pisoAula = "";
+$codigoEdificio = "";
+$nombreEdificio = "";
+$cantidadPisos = "";
+$accion = "Añadir";
+$mensajeSede = "Registrar Nueva Sede";
+$mensaje = "Registro de Nueva Aula";
+$mensajeEdificios = "Registro de nuevo Edificio";
 ?>
 
 <!DOCTYPE html>
@@ -63,8 +82,7 @@ $studentService = new studentService();
             <!-- SEARCH FORM -->
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                        aria-label="Search">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
                             <i class="fas fa-search"></i>
@@ -90,16 +108,15 @@ $studentService = new studentService();
                         <img src="../../dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
-                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
-                        <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
+                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
+                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
+                        <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
                     </div>
                 </div>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
@@ -158,24 +175,27 @@ $studentService = new studentService();
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="managClassrooms.php" class="nav-link"><!--crud aulas-->
+                                    <a href="managClassrooms.php" class="nav-link">
+                                        <!--crud aulas-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="managEdifice.php" class="nav-link"><!--crud edificios-->
+                                    <a href="managEdifice.php" class="nav-link">
+                                        <!--crud edificios-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Edificios</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="managCampus.php" class="nav-link"><!--crud sedes-->
+                                    <a href="managCampus.php" class="nav-link">
+                                        <!--crud sedes-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sedes</p>
                                     </a>
                                 </li>
-                                
+
                             </ul>
                         </li>
 
@@ -207,52 +227,66 @@ $studentService = new studentService();
 
             <section class="content">
                 <div class="container-fluid">
-<!-- /.row -->
-<div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Listado Sedes</h3>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Listado Sedes</h3>
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Cod_Sede</th>
+                                                <th>Nombre</th>
+                                                <th>Direccion</th>
+                                                <th>telefono</th>
+                                                <th>Codigo_Postal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $result = $infraestructura->mostrarInfraestructura($sede);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                            ?>
+                                                    <tr>
+                                                        <!--DATOS DE LA TABLA SEDES-->
+                                                        <td><?php echo $row["COD_SEDE"]; ?></td>
+                                                        <td><?php echo $row["NOMBRE"]; ?></td>
+                                                        <td><?php echo $row["DIRECCION"]; ?></td>
+                                                        <td><?php echo $row["TELEFONO"]; ?></td>
+                                                        <td><?php echo $row["CODIGO_POSTAL"]; ?></td>
+                                                 
+                                                    </tr>
+                                                <?php   }
+                                            } else {
+                                                ?>
+                                                <tr>
+                                                    <td>No hay datos en la tabla</td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th>Cod_Sede</th>
-                      <th>Nombre</th>
-                      <th>Direccion</th>
-                      <th>telefono</th>
-                      <th>Codigo_Postal</th>
-                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                         
-                         
-                         
-                    ?>
-
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-        <!-- /.row -->
+                    <!-- /.row -->
 
                 </div>
             </section>
@@ -284,7 +318,7 @@ $studentService = new studentService();
     <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

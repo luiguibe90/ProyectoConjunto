@@ -4,21 +4,33 @@ if (!isset($_SESSION['USU'])) {
     header('Location: ../../../Seed/login.html');
 }
 
-include '../../service/administratorService.php';
-include '../../service/teacherService.php';
-$teacherService = new teacherService();
-if (isset($_POST["btn_subR"])) {
-    $teacherService->insertPeopleTeacher(
-        $_POST["cedRepresentantive"],
-        $_POST["snRepresentative"],
-        $_POST["nameRepresentative"],
-        $_POST["addressRepresentative"],
-        $_POST["telfRepresentative"],
-        $_POST["dateBrhRepresentative"],
-        $_POST["genderR"],
-        $_POST["pemailRepresentative"]
-    );
-}
+include '../../service/infraestructuraService.php';
+$infraestructura = new infraestructuraService();
+    $sede="sede";
+    $edificio="edificio";
+    $aula="aula";
+    $codCampus="";
+    $nameCampus="";
+    $addressCampus="";
+    $telefCampus="";
+    $postCampus="";
+    $codigoAula = "";
+    $nombreAula="";
+    $capacidadAula="";
+    $pisoAula="";
+    $codigoEdificio="";
+    $nombreEdificio="";
+    $cantidadPisos="";
+    $accion="Añadir";
+    $mensajeSede="Registrar Nueva Sede";
+    $mensaje="Registro de Nueva Aula";
+    $mensajeEdificios = "Registro de nuevo Edificio";
+
+if(isset($_POST["btn_subR"]))
+    {
+        $infraestructura->insertarSede($_POST["nameCampus"],$_POST["addressCampus"],$_POST["telefCampus"],
+                                       $_POST["postCampus"]); 
+    }
 
 ?>
 
@@ -219,33 +231,33 @@ if (isset($_POST["btn_subR"])) {
                                 <div class="card-header">
                                     <h3 class="card-title">Formulario Sede:</h3>
                                 </div>
-                                <form role="form" data-toggle="validator" method="post">
+                                <form id="formCampus" role="form" action=""  data-toggle="validator" method="post"  >
                                     <div class="card-body">
                                         <div class="card-header">
                                             <h3 class="card-title">Datos Sede:</h3>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nombre Sede</label>
-                                            <input type="text" class="form-control" id="exampleText" name="nameSede" placeholder="Ingrese Nombre de la Sede" required>
+                                            <input type="text" class="form-control" id="exampleText" name="nameCampus" placeholder="Ingrese Nombre de Sede" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Dirección Sede</label>
                                             <input type="text" class="form-control" id="exampleText"
-                                            name="addressRepresentative"    placeholder="Ingrese la dirección de la sede" required>
+                                            name="addressCampus"    placeholder="Ingrese dirección de  sede" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Teléfono Sede</label>
                                             <input type="text" class="form-control" id="exampleText"
-                                            name="telfRepresentative"    placeholder="Ingrese  Teléfono de la Sede">
+                                            name="telefCampus"  placeholder="Ingrese  Teléfono de  Sede" required>
                                         </div>
                                         
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Código Postal</label>
                                             <input type="text" class="form-control" id="exampleText"
-                                            name="telfRepresentative"    placeholder="Ingrese el código postal de la Sede">
+                                            name="postCampus"  placeholder="Ingrese código postal de Sede" required>
                                         </div>
                                         
                                     </div>

@@ -1,26 +1,65 @@
 <?php
 session_start();
 if (!isset($_SESSION['USU'])) {
-  header('Location: ../../../Seed/login.html');
+    header('Location: ../../../Seed/login.html');
 }
+include '../../service/infraestructuraService.php';
+   
+    $infraestructura = new infraestructuraService();
+    $sede="sede";
+    $edificio="edificio";
+    $aula="aula";
+    $codigoSede="";
+    $nombreSede="";
+    $direccionSede="";
+    $telefonoSede="";
+    $codPostalSede="";
+    $codigoAula = "";
+    $nombreAula="";
+    $capacidadAula="";
+    $pisoAula="";
+    $codigoEdificio="";
+    $nombreEdificio="";
+    $cantidadPisos="";
+    $accion="Añadir";
+    $mensajeSede="Registrar Nueva Sede";
+    $mensaje="Registro de Nueva Aula";
+    $mensajeEdificios = "Registro de nuevo Edificio";
+//AULAS
+if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
+    $infraestructura->insertarAula(
+        $_POST['codigo_aula'],
+        $_POST['edificio'],
+        $_POST['nombre_aula'],
+        $_POST['capacidad_aula'],
+        $_POST['tipo_aula'],
+        $_POST['piso_aula']
+    );
+} else if (isset($_POST["accionAula"]) && ($_POST["accionAula"] == "Modificar")) {
+    $infraestructura->modificarAula(
+        $_POST['codigo_aula'],
+        $_POST['edificio'],
+        $_POST['nombre_aula'],
+        $_POST['capacidad_aula'],
+        $_POST['tipo_aula'],
+        $_POST['piso_aula'],
+        $_POST['codigo_aula_comparar'],
+        
+       
 
-include '../../service/administratorService.php';
-include '../../service/studentService.php';
-$studentService = new studentService();
-
-if (isset($_POST["btn_subR"])) {
-
-    $studentService->insertPeopleRepresentative($_POST["cedRepresentantive"], $_POST["snRepresentative"],
-    $_POST["nameRepresentative"],$_POST["addressRepresentative"],$_POST["telfRepresentative"],
-    $_POST["dateBrhRepresentative"],$_POST["genderR"],$_POST["pemailRepresentative"]);
-    
-
-} elseif (isset($_POST["btn_subA"])){
-    echo("<script>console.log('PHP: pass btnA');</script>");
-    $studentService->insertPeopleAlumn($_POST["cedAlumn"],$_POST["snameAlumn"],
-    $_POST["nameAlumn"],$_POST["addreAlumn"],$_POST["telefAlumn"],$_POST["dateBirthAlumn"],
-    $_POST["genderA"],$_POST["emailpAlumn"]);
-    
+    );
+} else if (isset($_GET["modificarAula"])) {
+    $result = $infraestructura->encontrarAula($_GET['modificarAula']);
+    if ($result != null) {
+        $codigoAula = $result['COD_AULA'];
+        $nombreAula = $result['NOMBRE'];
+        $capacidadAula = $result['CAPACIDAD'];
+        $pisoAula = $result['PISO'];
+        $mensaje = "Modificar Aula";
+        $accion = "Modificar";
+    }
+} else if (isset($_GET['eliminarAula'])) {
+    $infraestructura->eliminarAula($_GET['eliminarAula']);
 }
 
 ?>
@@ -68,7 +107,7 @@ if (isset($_POST["btn_subR"])) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                <a href="../../login/logout.php" class="nav-link">salir</a>
+                    <a href="../../login/logout.php" class="nav-link">salir</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -78,8 +117,7 @@ if (isset($_POST["btn_subR"])) {
             <!-- SEARCH FORM -->
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                        aria-label="Search">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
                             <i class="fas fa-search"></i>
@@ -105,20 +143,19 @@ if (isset($_POST["btn_subR"])) {
                         <img src="../../dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
-                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
-                        <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
+                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
+                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
+                        <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
                     </div>
                 </div>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               <li class="nav-item">
+                        <li class="nav-item">
                             <a href="index.php" class="nav-link active">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
@@ -173,24 +210,27 @@ if (isset($_POST["btn_subR"])) {
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="managClassrooms.php" class="nav-link"><!--crud aulas-->
+                                    <a href="managClassrooms.php" class="nav-link">
+                                        <!--crud aulas-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="managEdifice.php" class="nav-link"><!--crud edificios-->
+                                    <a href="managEdifice.php" class="nav-link">
+                                        <!--crud edificios-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Edificios</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="managCampus.php" class="nav-link"><!--crud sedes-->
+                                    <a href="managCampus.php" class="nav-link">
+                                        <!--crud sedes-->
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sedes</p>
                                     </a>
                                 </li>
-                                
+
                             </ul>
                         </li>
 
@@ -227,113 +267,166 @@ if (isset($_POST["btn_subR"])) {
 
             <section class="content">
                 <div class="container-fluid">
+                    <form action="" name="aulas" id="aulas" method="post">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Código Edificio</th>
+                                        <th>Nombre</th>
+                                        <th>Capacidad</th>
+                                        <th>Tipo</th>
+                                        <th>Piso</th>
+                                        <th>Actualizar</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $result = $infraestructura->mostrarInfraestructura($aula);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                            <tr>
+                                                <!--DATOS DE LA TABLA EDIFICIOS-->
+                                                <td><?php echo $row["COD_AULA"]; ?></td>
+                                                <td><?php echo $row["COD_EDIFICIO"]; ?></td>
+                                                <td><?php echo $row["NOMBRE"]; ?></td>
+                                                <td><?php echo $row["CAPACIDAD"]; ?></td>
+                                                <td><?php echo $row["TIPO"]; ?></td>
+                                                <td><?php echo $row["PISO"]; ?></td>
+                                                <td>
+                                                    <div class="text-center">
+                                                        <a href="modifyClassroom.php?modificarAula=<?php echo $row["COD_AULA"]; ?>#aulasForm" class="btn btn-success" type="button">
+                                                            <i class="zmdi zmdi-refresh"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
+                                        <?php   }
+                                    } else {
+                                        ?>
+                                        <tr>
+                                            <td>No hay datos en la tabla</td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Modificar Aula</h3>
+                                    </div>
+                                    <div style="margin-left: 14px;">
+                                    </div>
+                                    <div class="row container-flat-form">
+                                        <div class="card-body">
+                                            <input type="hidden" name="codigo_aula_comparar" value="<?php echo $codigoAula ?>">
+                                            <div class="form-group" id="aulasForm">
+                                                <label for="exampleInputEmail1">Codigo Aula</label>
+                                                <input type="text" class="form-control" placeholder="Código de Aula" required="" data-toggle="tooltip" data-placement="top" title="Escriba el código del Aula" name="codigo_aula" value="<?php echo $codigoAula ?>">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Codigo Edificio</label>
+                                                <select name="edificio" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                                                    <?php
+                                                    $result3 = $infraestructura->mostrarInfraestructura($edificio);
+                                                    foreach ($result3 as $opciones) :
+                                                    ?>
+                                                        <option value="<?php echo $opciones['COD_EDIFICIO'] ?>"><?php echo $opciones['COD_EDIFICIO'] ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nombre Aula</label>
+                                                <input type="text" class="form-control" placeholder="Nombre del Aula" required="" data-toggle="tooltip" data-placement="top" title="Nombre del Aula" name="nombre_aula" value="<?php echo $nombreAula ?>">
+
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Capacidad Aula</label>
+                                                <input type="text" class="form-control" placeholder="Capacidad del aula" required="" data-toggle="tooltip" data-placement="top" title="Escriba la capacidad del aula" name="capacidad_aula" value="<?php echo $capacidadAula ?>">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Tipo Aula</label>
+                                                <select name="tipo_aula" class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                                                    <option value="GEN">General</option>
+                                                    <option value="LAB">Laboratorio</option>
+                                                    <option value="AUD">Audiovisuales</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                            <label for="exampleInputEmail1">Piso Aula</label>
+                                                <input type="text" class="form-control" placeholder="Piso del aula" required="" data-toggle="tooltip" data-placement="top" title="Escriba el piso donde se encuentra el aula" name="piso_aula" value="<?php echo $pisoAula ?>">
+                                                
+                                            </div>
+                                            <p class="text-center">
+                                                <input type="submit" name="accionAula" value="<?php echo $accion ?>" class="btn btn-primary" style="margin-right: 20px;">
+                                                <button type="reset" class="btn btn-info"><i class="zmdi zmdi-roller"></i> &nbsp;&nbsp; Limpiar</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                    </form>
+                </div>
+        </div>
+        <!--<div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Formulario Aula a Modificar:</h3>
+                                    <h3 class="card-title">Modificar Aula</h3>
                                 </div>
-                                <!-- /.card-header -->
-                                <form id="formRepresentative" role="form" action=""  data-toggle="validator" method="post"  >
+                                
+                                <form id="formRepresentative" role="form" action="" data-toggle="validator" method="post">
                                     <div class="card-body">
-                                        
-                                        <label for="Granados"> Seleccione La Sede: </label><!--debe selecionar la sede a la que pertenece el edificio-->
-                                            <select name="campus" class="form-control">
-                                            
-                                            </select>
-                                            
-                                            <label for="Granados"> Seleccione el Edificio: </label><!--debe selecionar el edificio al que pertenece el aula y desplegarse los edificios que en la sede seleccionada anteriormente-->
-                                            <select name="campus" class="form-control">
-                                            
-
-                                            </select>
-                                            
-                                            
-                                            <label for="Granados"> Seleccione el Aula: </label><!--debe selecionar el edificio al que pertenece el aula y desplegarse los edificios que en la sede seleccionada anteriormente-->
-                                            <select name="campus" class="form-control">
-                                            <!--Se deben llenar los datos al selecionar el aula-->
-
-                                            </select>
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nombre Aula</label>
                                             <input type="text" class="form-control" id="exampleText" name="nameAula" placeholder="Ingrese Nombre">
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Capacidad</label>
                                             <input type="text" class="form-control" id="exampleText" name="capAula" placeholder="Ingrese la capacidad del Aula" maxlength="10">
                                         </div>
-                                       
+
                                         <div class="form-group">
                                             <label for="aulaProfesores">Tipo</label>
-                                            <input type="text" class="form-control" id="exampleText" name="capTipo" placeholder="Ingrese el Tipo de Aula" >
+                                            <input type="text" class="form-control" id="exampleText" name="capTipo" placeholder="Ingrese el Tipo de Aula">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Piso</label>
-                                            <input type="text" class="form-control" id="exampleText" name="Piso" placeholder="Ingrese el piso en que se encuentra la Aula" >
+                                            <input type="text" class="form-control" id="exampleText" name="Piso" placeholder="Ingrese el piso en que se encuentra la Aula">
                                         </div>
-                                        
 
                                     </div>
-                                    <!-- /.card-body -->
-                                    
+                                   
+
                                 </form>
                             </div>
-                            
+
                         </div>
-                        <div class="col-md-6">
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Formulario Datos Nuevos Aula:</h3>
-                                </div>
-                                <!-- /.card-header -->
-                                
-                                <form role="form" id="formAlumn"  action="" data-toggle="validator" method="post" >
-                                    <div class="card-body">
-                                        <div class="card-header">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Nombre Aula</label>
-                                            <input type="text" class="form-control" id="exampleText" name="nameAula" placeholder="Ingrese Nombre">
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Capacidad</label>
-                                            <input type="text" class="form-control" id="exampleText" name="capAula" placeholder="Ingrese la capacidad del Aula" maxlength="10">
-                                        </div>
-                                       
-                                        <div class="form-group">
-                                            <label for="aulaProfesores">Tipo</label>
-                                            <input type="text" class="form-control" id="exampleText" name="capTipo" placeholder="Ingrese el Tipo de Aula" >
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Piso</label>
-                                            <input type="text" class="form-control" id="exampleText" name="Piso" placeholder="Ingrese el piso en que se encuentra la Aula" >
-                                        </div>
-
-                                        <div class="card-footer">
-                                        <button name="btn_subR" type="submit" class="btn btn-primary">Modificar</button>
-                                    </div>
-
-
-                            </div>
-                            
-                        </div>
 
                     </div>
 
-                </div>
+                </div>-->
 
 
-            </section>
+        </section>
 
 
-        </div>
+    </div>
 
 
-        <!-- Main content -->
+    <!-- Main content -->
     </div>
     <!-- /.content-wrapper -->
 
@@ -359,7 +452,7 @@ if (isset($_POST["btn_subR"])) {
     <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-    $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
