@@ -4,24 +4,53 @@ if (!isset($_SESSION['USU'])) {
     header('Location: ../../../Seed/login.html');
 }
 
-include '../../service/administratorService.php';
-include '../../service/teacherService.php';
-$teacherService = new teacherService();
-if (isset($_POST["btn_subR"])) {
-    $teacherService->insertPeopleTeacher(
-        $_POST["cedRepresentantive"],
-        $_POST["snRepresentative"],
-        $_POST["nameRepresentative"],
-        $_POST["addressRepresentative"],
-        $_POST["telfRepresentative"],
-        $_POST["dateBrhRepresentative"],
-        $_POST["genderR"],
-        $_POST["pemailRepresentative"]
+include '../../service/infraestructuraService.php';
+
+$infraestructura = new infraestructuraService();
+$sede = "sede";
+$edificio = "edificio";
+$aula = "aula";
+$codigoSede = "";
+$nombreSede = "";
+$direccionSede = "";
+$telefonoSede = "";
+$codPostalSede = "";
+$codigoAula = "";
+$nombreAula = "";
+$capacidadAula = "";
+$pisoAula = "";
+$codigoEdificio = "";
+$nombreEdificio = "";
+$cantidadPisos = "";
+$accion = "Añadir";
+$mensajeSede = "Registrar Nueva Sede";
+$mensaje = "Registro de Nueva Aula";
+$mensajeEdificios = "Registro de nuevo Edificio";
+
+
+if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')) {
+    $infraestructura->insertarEdificio($_POST['codigo_edificio'], $_POST['sede'], $_POST['nombre_edificio'], $_POST['pisos']);
+} else if (isset($_POST["accionEdificios"]) && ($_POST["accionEdificios"] == "Modificar")) {
+    $infraestructura->modificarEdicio(
+        $_POST['codigo_edificio'],
+        $_POST['sede'],
+        $_POST['nombre_edificio'],
+        $_POST['pisos'],
+        $_POST['codigo_edificio_comparar']
     );
+} else if (isset($_GET["modificarEdificio"])) {
+    $result = $infraestructura->encontrarEdificio($_GET['modificarEdificio']);
+    if ($result != null) {
+        $codigoEdificio = $result['COD_EDIFICIO'];
+        $nombreEdificio = $result['NOMBRE'];
+        $cantidadPisos = $result['CANTIDAD_PISOS'];
+        $mensajeEdificios = "ModificarEdificio";
+        $accion = "Modificar";
+    }
+} else if (isset($_GET['eliminarEdificio'])) {
+    $infraestructura->eliminarEdificio($_GET['eliminarEdificio']);
 }
-
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -58,7 +87,7 @@ if (isset($_POST["btn_subR"])) {
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <?php include("../../views/barNav.php");?>
+        <?php include("../../views/barNav.php"); ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -84,8 +113,11 @@ if (isset($_POST["btn_subR"])) {
 
                 <!-- Sidebar Menu -->
                 <?php include("../../views/menuAdmin.php");?>
+                <!-- /.sidebar-menu -->
             </div>
+            <!-- /.sidebar -->
         </aside>
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -93,56 +125,81 @@ if (isset($_POST["btn_subR"])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Gestión Edificio</h1>
+                            <h1>Gestion Edificio</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                                <li class="breadcrumb-item"><a href="managedifice.php">Gestión Edificio</a></li>
+                                <li class="breadcrumb-item"><a href="managEdifice.php">Gestion Edificio</a></li>
                                 <li class="breadcrumb-item active">Eliminar Edificio</li>
                             </ol>
                         </div>
+
+
                     </div>
-                </div>
+
+
+                </div><!-- /.container-fluid -->
+
             </section>
 
             <section class="content">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Eliminar Edificio:</h3>
-                                </div>
-                                <form role="form" data-toggle="validator" method="post">
-                                    <div class="card-body">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Datos del Edificio:</h3>
-                                        </div>
-                                     
-                                            <label for="Granados"> Seleccione La Sede: </label><!--debe selecionar la sede a la que pertenece el edificio-->
-                                            <select name="campus" class="form-control">
-                                            <?php
-                                            
-                                            ?>
-                                            </select>
-                                            
-                                            <label for="Granados"> Seleccione el Edificio: </label><!--debe selecionar el edificio al que pertenece a la Sede selecionada anteriormente-->
-                                            <select name="campus" class="form-control">
-                                                                   
-                                    </div>
-                                    <div class="card-footer">
-                                        <button name="btn_subR" type="submit" class="btn btn-primary">Eliminar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <form action="" name="edificio" id="edificio" method="post">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Código Sede</th>
+                                        <th>Nombre</th>
+                                        <th>Cantidad de Pisos</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $result = $infraestructura->mostrarInfraestructura($edificio);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $row["COD_EDIFICIO"]; ?></td>
+                                                <td><?php echo $row["COD_SEDE"]; ?></td>
+                                                <td><?php echo $row["NOMBRE"]; ?></td>
+                                                <td><?php echo $row["CANTIDAD_PISOS"]; ?></td>
+                                                <td>
+                                                    <div class="text-center">
+                                                        <a href="removeEdifice.php?eliminarEdificio=<?php echo $row["COD_EDIFICIO"]; ?>#edificiosForm" class="btn btn-danger" role="button">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php   }
+                                    } else {
+                                        ?>
+                                        <tr>
+                                            <td>No hay datos en la tabla</td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div><br>
+                        
+                    </form>
                 </div>
             </section>
+
+
         </div>
+
+
+        <!-- Main content -->
     </div>
+    <!-- /.content-wrapper -->
     <?php include("../../views/footer.php");?>
+
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->

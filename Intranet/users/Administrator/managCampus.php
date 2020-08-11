@@ -133,18 +133,7 @@ $countTeachers = $administratorService->countTypePeople(3);
                             <a href="modifyCampus.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a><!-- crear archivo para modificar campus-->
                         </div>
                     </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3><?php echo $countTeachers ?></h3>
-                                <p>Eliminar Sede</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <a href="removeCampus.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a><!-- crear archivo para eliminar campus-->
-                        </div>
-                    </div>
+                    
 
             </section>
         </div>
