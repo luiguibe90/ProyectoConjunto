@@ -90,7 +90,7 @@ $studentService = new studentService();
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="./index.php">Inicio</a></li>
-                                <li class="breadcrumb-item">Matemáticas</li>
+                                <li class="breadcrumb-item">Materia</li>
                                 <li class="breadcrumb-item active">Tareas</li>
                             </ol>
                         </div>

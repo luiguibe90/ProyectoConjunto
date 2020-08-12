@@ -1,10 +1,18 @@
 <?php
+error_reporting(0);
+include '../../service/TareaServicios.php';
+$tarea = new TareaServicios();
 session_start();
+$cod_alumno = $_SESSION['USU']['COD_PERSONA'];
 if (!isset($_SESSION['USU'])) {
-    header('Location: ../../../Seed/login.html');
+  header('Location: ../../../Seed/login.html');
 }
-include '../../service/studentService.php';
-$studentService = new studentService();
+$accion = "Aceptar";
+
+if (isset($_GET['finalizarTarea'])) {
+  //$tarea->tareaTerminada($_GET['finalizarTarea']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +55,7 @@ $studentService = new studentService();
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-    <?php include("../../views/barNav.php");?>
+    <?php include("../../views/barNav.php"); ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -65,14 +73,14 @@ $studentService = new studentService();
             <img src="../../dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
-            <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
-            <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
+            <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
+            <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
+            <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
           </div>
         </div>
 
         <!-- Sidebar Menu -->
-        <?php include("../../views/menuEstudiante.php");?>
+        <?php include("../../views/menuEstudiante.php"); ?>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
@@ -85,12 +93,12 @@ $studentService = new studentService();
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Información</h1>
+              <h1>Aula</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Estudiante</a></li>
-                <li class="breadcrumb-item active">Inicio</li>
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item active">Anuncios</li>
               </ol>
             </div>
           </div>
@@ -100,100 +108,86 @@ $studentService = new studentService();
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <!-- Small boxes (Stat box) -->
-          <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h3>3</h3>
-                  <p>Materias</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-ios-book"></i>
-                </div>
-                <a href="./subject.php" class="small-box-footer">ir <i
-                    class="fas fa-arrow-circle-right"></i></a>
+          <div class="col-md-12">
+            <div class="card card-default">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-bullhorn"></i>
+                  Anuncios
+                </h3>
               </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3>100<sup style="font-size: 20px">%</sup></h3>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="callout callout-danger">
+                  <h5>Lunes 10 de agosto Independencia del Ecuador</h5>
 
-                  <p>Asistencia</p>
+                  <p>No hay clases virtuales. Disfruten el feriado!</p>
                 </div>
-                <div class="icon">
-                  <i class="icon flaticon-education"></i>
+                <div class="callout callout-info">
+                  <h5>Prueba para el miercoles 12 de agosto</h5>
+
+                  <p>Estudiar todos los temas de la primera unidad.</p>
                 </div>
-                <a href="./assistance.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
+
               </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3>.</h3>
-                  <p>Horario</p>
-                </div>
-                <div class="icon">
-                  <i class="icon fa fa-calendar"></i>
-                </div>
-                <a href="./schedule.php" class="small-box-footer">ir <i
-                    class="fas fa-arrow-circle-right"></i></a>
+
+              <div class="row mt-2 pb-3">
+                <?php
+                $result2 = $tarea->verificarComunicado($cod_alumno);
+                if ($result2->num_rows > 0) {
+                  $cont = 0;
+                  while ($row = $result2->fetch_assoc()) {
+                ?>
+                    <div class="col-sm-6 col-md-4 col-lg-3 mb-2">
+                      <div class="callout callout-info">
+                        <div class="card p-2 border-secondary mb-2">
+                          <img src="<?php echo "../assets/img/" . $row['IMAGEN'] ?>" class="card-img-top" height="180 !important" width="250 !important">
+                          <div class="title-flat-form title-flat-blue">
+                            <button class="title-flat-form title-flat-blue btn btn-primary" type="button" data-toggle="collapse" data-target="#detallesTarea<?php echo $cont ?>" aria-expanded="false" aria-controls="detallesTarea<?php echo $cont ?>">
+                              <?php echo $row['NOMBRE'] ?>
+                            </button>
+                          </div>
+                          <div class="card-body p-1 collapse" id="detallesTarea<?php echo $cont ?>">
+                            <h1 class="card-title text-center text-info"><?= $row["TITULO_COMUNICADO"] ?></h1>
+                            <h2 class="card-text text-center text-danger"><?php echo $row["DETALLE_COMUNICADO"] ?></h2>
+                            <h3 class="card-text text-center text-success"><?php echo $row["FECHA_COMUNICADO"] ?></h3>
+                            <a href="../assets/files/<?php echo $row['ARCHIVO'] ?>" download="<?php echo $row['ARCHIVO'] ?>" class="btn btn-success" role="button">
+                              Descargar Archivo
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                <?php $cont++;
+                  }
+                } ?>
               </div>
+              <!-- /.card-body -->
             </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-danger">
-                <div class="inner">
-                  <h3>.</h3>
-                  <p>Comunicado</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-calendar"></i>
-                </div>
-                <a href="./notification.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col --><
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                <div class="inner">
-                  <h3>9</h3>
-                  <p>Calificaciones</p>
-                </div>
-                <div class="icon">
-                  <i class="ion flaticon-diploma"></i>
-                </div>
-                <a href="./grade.php" class="small-box-footer">ir <i
-                    class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
+            <!-- /.card -->
           </div>
-          <!-- /.row -->
-          <!-- Main row -->
-
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <!-- END ALERTS AND CALLOUTS -->
 
       </section>
-      <!-- right col -->
+
     </div>
-    <!-- /.row (main row) -->
+
+  </div>
+  <!-- /.row (main row) -->
   </div><!-- /.container-fluid -->
   </section>
 
   </div>
 
+
+
+
   <!-- /.content-wrapper -->
 
-  <?php include("../../views/footer.php");?>
-
-    
+  <?php include("../../views/footer.php"); ?>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

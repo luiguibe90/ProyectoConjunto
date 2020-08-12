@@ -4,12 +4,9 @@ $cod_docente = $_SESSION['USU']['COD_PERSONA'];
 if (!isset($_SESSION['USU'])) {
     header('Location: ../../../Seed/login.html');
 }
-include '../../service/attendanceService.php';
-$asistencia = new attendanceService();
+include '../../service/gradeService.php';
+$calificacion = new gradeService();
 $accion = "Aceptar";
-
-$fecha = date("Y-m-d H:i:s"); // 2001-03-10 17:16:18 (el formato DATETIME de MySQL)
-
 ?>
 
 
@@ -83,19 +80,18 @@ $fecha = date("Y-m-d H:i:s"); // 2001-03-10 17:16:18 (el formato DATETIME de MyS
             </div>
             <!-- /.sidebar -->
         </aside>
-
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Ingresar Calificaciones</h1>
+                            <h1>Ingresar Notas</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+
                                 <li class="breadcrumb-item active">Ingresar Notas</li>
                             </ol>
                         </div>
@@ -103,294 +99,201 @@ $fecha = date("Y-m-d H:i:s"); // 2001-03-10 17:16:18 (el formato DATETIME de MyS
                 </div><!-- /.container-fluid -->
             </section>
 
-
-
             <section class="content">
-
                 <div class="container-fluid">
-                    <div class="container-flat-form">
-                        <form method="post">
-                            <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Seleccione Para Registrar Notas</h3>
+                                </div>
+                                <form method="post">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Seleccione Periodo</label>
+                                            <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" name="periodo">
+                                                <?php
+                                                $result = $calificacion->periodo();
 
-                                <label>Seleccione Periodo</label>
-                                <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 70%;">
-                                    <?php
-                                    $result = $asistencia->periodo();
+                                                foreach ($result as $opciones) :
+                                                ?>
+                                                    <option value="<?php echo $opciones['COD_PERIODO_LECTIVO'] ?>"><?php echo $opciones['COD_PERIODO_LECTIVO'] ?></option>
+                                                <?php endforeach ?>
+                                            </select>
 
-                                    foreach ($result as $opciones) :
-                                    ?>
-                                        <option value="<?php echo $opciones['COD_PERIODO_LECTIVO'] ?>"><?php echo $opciones['PERIODO'] ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Seleccione Asignatura</label>
+                                            <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" name="asignatura">
 
+                                                <?php
+                                                $result = $calificacion->docenteCalificacion($cod_docente);
+
+                                                foreach ($result as $opciones) :
+                                                ?>
+                                                    <option value="<?php echo $opciones['COD_NIVEL_EDUCATIVO'] ?>|<?php echo $opciones['COD_ASIGNATURA'] ?>|<?php echo $opciones['COD_PARALELO'] ?>"><?php echo $opciones['NOMBRE'] ?>--<?php echo $opciones['NOMPARALELO'] ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Seleccione Quimestre</label>
+                                            <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" name="quimestre">
+                                                <option value="PROMEDIOQ1">Primer Quimestre</option>
+                                                <option value="PROMEDIOQ2">Segundo Quimestre</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <input type="submit" name="accionCalificacion" value="<?php echo $accion ?>" class="btn btn-primary" style="margin-right: 20px;">
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-12 col-sm-6">
-                                <label>Seleccione Asignatura</label>
-                                <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;" name="asignatura">
+                        </div>
 
-                                    <?php
-                                    $result = $asistencia->docenteAsistencia($cod_docente);
-                                    echo ("<script>console.log('PHP:recibido ');</script>");
-                                    foreach ($result as $opciones) :
-                                    ?>
-                                        <option value="<?php echo $opciones['COD_NIVEL_EDUCATIVO'] ?>|<?php echo $opciones['COD_ASIGNATURA'] ?>|<?php echo $opciones['COD_PARALELO'] ?>"><?php echo $opciones['NOMBRE'] ?>--<?php echo $opciones['COD_NIVEL_EDUCATIVO'] ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-
-                            <div class="col-12 col-sm-6">
-                                <label>Seleccione Quimestre</label>
-                                <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 100%;" name="quimestre">
-                                    <option value="PROMEDIOQ1">Primer Quimestre</option>
-                                    <option value="PROMEDIOQ2">Segundo Quimestre</option>
-                                </select>
-                            </div>
-                            <p class="text-center">
-                                <input type="submit" name="accionAsistencia" value="<?php echo $accion ?>" class="btn btn-primary" style="margin-right: 20px;">
-                                <button type="reset" class="btn btn-info" style="margin-right: 20px;"><i class="zmdi zmdi-roller"></i> &nbsp;&nbsp; Limpiar</button>
-                            </p>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <?php
-        if (isset($_POST['accionAsistencia']) && ($_POST['accionAsistencia'] == 'Aceptar')) {
-            $valores = $_POST['asignatura'];
-            $result_explode = array_map('trim', explode('|', $valores));
-            $cod_nivel_educativo = $result_explode[0];
-            $cod_asignatura = $result_explode[1];
-            $cod_paralelo = $result_explode[2];
-            $cod_periodo_lectivo = $_POST['periodo'];
-        ?>
-            <form action="" method="post" id="registroAsistencia" name="registroAsistencia">
-                <input type="hidden" name="cod_nivel_educativo" value="<?php echo $cod_nivel_educativo ?>">
-                <input type="hidden" name="cod_asignatura" value="<?php echo $cod_asignatura ?>">
-                <input type="hidden" name="cod_paralelo" value="<?php echo $cod_paralelo ?>">
-                <input type="hidden" name="cod_periodo_lectivo" value="<?php echo $cod_periodo_lectivo ?>">
-                <input type="hidden" name="fecha" value="<?php echo $fecha ?>">
-
-                <?php
-                // Establecer la zona horaria predeterminada a usar. Disponible desde PHP 5.1 
-                date_default_timezone_set('America/Bogota');
-
-                // Imprime algo como: Monday 8th of August 2005 03:12:46 PM
-                echo date('l jS \of F Y h:i:s A');
-                ?>
-
-
-
-                <div class="table-responsive">
-                    <table id="tablaEstudiantesAsistencias" class="table-striped table-bordered table-condensed" style="width: 100%;">
-                        <thead class="text-center">
-                            <br>
-                            <tr>
-                                <th>Apellido</th>
-                                <th>Nombre</th>
-                                <th>Asistencia</th>
-                                <th>Falta Justificada</th>
-                                <th>Falta Injustificada</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <div class="container-fluid">
                             <?php
-                            $contador = 0;
-                            $result = $asistencia->listarEstudiantes($cod_nivel_educativo);
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
+                            if (isset($_POST['accionCalificacion']) && ($_POST['accionCalificacion'] == 'Aceptar')) {
+                                $valores = $_POST['asignatura'];
+                                $result_explode = array_map('trim', explode('|', $valores));
+                                $cod_nivel_educativo = $result_explode[0];
+                                $cod_asignatura = $result_explode[1];
+                                $cod_paralelo = $result_explode[2];
+                                $cod_periodo_lectivo = $_POST['periodo'];
+                                $quimestre = $_POST['quimestre'];
                             ?>
-                                    <tr>
-                                        <!--DATOS DE LA TABLA ASISTENCIAS-->
-                                        <td><?php echo $row["APELLIDO"]; ?></td>
-                                        <td><?php echo $row["NOMBRE"]; ?></td>
-                                        <td>
-                                            <input type="radio" name="asistencias[<?php echo $contador ?>][estado]" id="estado" value="ASI">
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="asistencias[<?php echo $contador ?>][estado]" id="estado" value="JUS">
-                                        </td>
-                                        <td>
-                                            <input type="radio" name="asistencias[<?php echo $contador ?>][estado]" id="estado" value="INJ">
-                                        </td>
-                                        <input type="hidden" name="cod_alumno[]" value="<?php echo $row['COD_PERSONA'] ?>">
-                                    </tr>
-                                <?php $contador++;
-                                }
-                            } else {
-                                ?>
-                                <tr>
-                                    <td colspan="5">NO HAY DATOS EN LA TABLA</td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
-                <br>
-                <input type="submit" name="accionAsis" value="Hecho" class="btn btn-primary" style="margin-right: 20px;">
-            </form>
-        <?php
-        } ?>
-
-
-        <?php
-        if (isset($_POST['accionAsis']) && ($_POST['accionAsis'] == 'Hecho')) {
-            $codigo_alumno = $_POST['cod_alumno'];
-            $asistencias = $_POST['asistencias'];
-            foreach (array_combine($codigo_alumno, $asistencias) as $alumno => $asistencias) {
-                $asistencia->ingresarAsistencia(
-                    $_POST['cod_periodo_lectivo'],
-                    $alumno,
-                    $_POST['cod_nivel_educativo'],
-                    $_POST['fecha'],
-                    $asistencias['estado']
-                );
-            }
-        }
-        ?>
-
-    </div>
-    </section>
-
-
-
-
-
-
-
-
-
-
-    <!-- Main content -->
-    <!-- <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <label>Seleccione Periodo</label>
-                                    <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 70%;">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <label>Seleccione Nivel</label>
-                                    <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 70%;">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <label>Seleccione Asignatura</label>
-                                    <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 70%;">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <label>Seleccione Quimestre</label>
-                                    <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 70%;">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <section class="content">
-                            <div class="container-fluid">
-                               
-            <div class="row">
-                <div class="col-10">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Ingrese Notas</h3>
-                        </div>
-                   
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>Apellidos</th>
-                                        <th>Nombres</th>
-                                        <th>Ingrese Notas</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                <form action="" method="post" id="registroNotas" name="registroNotas">
+                                    <input type="hidden" name="cod_nivel_educativo" value="<?php echo $cod_nivel_educativo ?>">
+                                    <input type="hidden" name="cod_asignatura" value="<?php echo $cod_asignatura ?>">
+                                    <input type="hidden" name="cod_paralelo" value="<?php echo $cod_paralelo ?>">
+                                    <input type="hidden" name="cod_periodo_lectivo" value="<?php echo $cod_periodo_lectivo ?>">
+                                    <input type="hidden" name="quimestre" value="<?php echo $quimestre ?>">
                                     <?php
-                                    $result = $studentService->showPeople(1);
-                                    while ($alumn = mysqli_fetch_array($result)) {
-                                        echo "<tr>";
-                                        echo "<td>" . $alumn['COD_PERSONA'] . "</td>";
-                                        echo "<td>" . $alumn['APELLIDO'] . "</td>";
-                                        echo "<td>" . $alumn['NOMBRE'] . "</td>";
-                                    ?>
-                                        <td>
-                                            <a href="addGrade.php?codigo='<?php echo $alumn['COD_PERSONA'] ?>'" title="Ingresar Notas" class="btn btn-primary btn-sm"><span class="far fa-edit fa-lg" aria-hidden="true"></span></a>
-                                        </td>
-                                    <?php echo "</tr>";
-                                    }
                                     ?>
 
-                                </tbody>
-                            </table>
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Listado Alumnos</h3>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body table-responsive p-0">
+                                                <table class="table table-hover text-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Apellido</th>
+                                                            <th>Nombre</th>
+                                                            <th style="text-align: right;">Deberes</th>
+                                                            <th style="text-align: right;">Talleres</th>
+                                                            <th style="text-align: right;">Pruebas</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $contador = 0;
+                                                        $result = $calificacion->listarEstudiantes($cod_nivel_educativo, $cod_periodo_lectivo);
+                                                        if ($result->num_rows > 0) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                        ?>
+                                                                <tr>
+                                                                    <!--DATOS DE LA TABLA SEDES-->
+                                                                    <td><?php echo $row["APELLIDO"]; ?></td>
+                                                                    <td><?php echo $row["NOMBRE"]; ?></td>
+                                                                    <td>
+                                                                        <input type="text" style="width: 50px" class="form-control float-right" name="notas[<?php echo $contador ?>][nota1]" id="nota1" value="">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" style="width: 50px" class="form-control float-right" name="notas[<?php echo $contador ?>][nota2]" id="nota2" value="">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" style="width: 50px" class="form-control float-right" name="notas[<?php echo $contador ?>][nota3]" id="nota3" value="">
+                                                                    </td>
+                                                                    <input type="hidden" name="cod_alumno[]" value="<?php echo $row['COD_PERSONA'] ?>">
+                                                                </tr>
+                                                            <?php $contador++;
+                                                            }
+                                                        } else {
+                                                            ?>
+                                                            <tr>
+                                                                <td>No hay datos en la tabla</td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="card-footer">
+                                            
+                                                <input type="submit" name="accionNotas" value="Hecho" class="btn btn-primary" style="margin-right: 20px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            <?php
+                            } ?>
+
+
+                            <?php
+                            if (isset($_POST['accionNotas']) && ($_POST['accionNotas'] == 'Hecho') && ($_POST['quimestre'] == 'PROMEDIOQ1')) {
+                                $codigo_alumno = $_POST['cod_alumno'];
+                                $notas = $_POST['notas'];
+                                foreach (array_combine($codigo_alumno, $notas) as $alumno => $notas) {
+                                    $calificacion->ingresarNotas(
+                                        $_POST['cod_periodo_lectivo'],
+                                        $alumno,
+                                        $_POST['cod_nivel_educativo'],
+                                        $_POST['cod_asignatura'],
+                                        $_POST['cod_paralelo'],
+                                        $cod_docente,
+                                        $notas['nota1'],
+                                        $notas['nota2'],
+                                        $notas['nota3']
+                                    );
+                                    $calificacion->promedioQuimestral1(
+                                        $_POST['cod_periodo_lectivo'],
+                                        $alumno,
+                                        $_POST['cod_nivel_educativo'],
+                                        $notas['nota1'],
+                                        $notas['nota2'],
+                                        $notas['nota3']
+                                    );
+                                }
+                            } else if (isset($_POST['accionNotas']) && ($_POST['accionNotas'] == 'Hecho') && ($_POST['quimestre'] == 'PROMEDIOQ2')) {
+                                $codigo_alumno = $_POST['cod_alumno'];
+                                $notas = $_POST['notas'];
+                                foreach (array_combine($codigo_alumno, $notas) as $alumno => $notas) {
+                                    $calificacion->ingresarNotas2(
+                                        $alumno,
+                                        $_POST['cod_asignatura'],
+                                        $notas['nota1'],
+                                        $notas['nota2'],
+                                        $notas['nota3']
+                                    );
+                                    $calificacion->promedioQuimestral2(
+                                        $_POST['cod_periodo_lectivo'],
+                                        $alumno,
+                                        $_POST['cod_nivel_educativo'],
+                                        $notas['nota1'],
+                                        $notas['nota2'],
+                                        $notas['nota3']
+                                    );
+                                }
+                            }
+                            ?>
+
                         </div>
-                    
-                    </div>
-          
-                </div>
-            </div>
-        
-
+            </section>
+            <!-- Main content -->
         </div>
-        </section>
-    </div>
-    </section> -->
-    <!-- right col -->
-    </div>
-    <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
-    </section>
+        <!-- /.content-wrapper -->
+        <?php include("../../views/footer.php"); ?>
 
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
     </div>
-
-    <?php include("../../footer.php"); ?>
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-    </div>
-    <!-- ../wrapper -->
+    <!-- ./wrapper -->
 
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
