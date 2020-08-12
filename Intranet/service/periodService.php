@@ -44,7 +44,7 @@ return $this->conex->affected_rows;
 }
  
 function selectPeriod(){
-  $consult = $this->conex->query("SELECT *FROM PERIODO_LECTIVO ");
+  $consult = $this->conex->query("SELECT *FROM PERIODO_LECTIVO WHERE  PERIODO_LECTIVO.ESTADO ='ACT' ");
   $cont=0;
   $datos=null;      
   while ($row = $consult->fetch_assoc()){
@@ -86,7 +86,8 @@ REGLA_PERIODO.VALOR
 FROM
 REGLA_PERIODO
 INNER JOIN PERIODO_LECTIVO ON REGLA_PERIODO.COD_PERIODO_LECTIVO = PERIODO_LECTIVO.COD_PERIODO_LECTIVO
-WHERE PERIODO_LECTIVO.COD_PERIODO_LECTIVO = $modulo
+WHERE PERIODO_LECTIVO.COD_PERIODO_LECTIVO = $modulo 
+
 ");
 while ($row = $consult->fetch_assoc()) {    
   $datos['data'][] = $row;

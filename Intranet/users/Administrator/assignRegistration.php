@@ -285,7 +285,7 @@ $aspirantService = new aspirantService();
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success" onclick="crearNuevo()">Matricular</button>
+                                <button type="button" class="btn btn-success" onclick="enrrollNewAlumn()">Matricular</button>
                                 <button id="cerrar" type="button" class="btn btn-danger"
                                     data-dismiss="modal">Cerrar</button>
                             </div>
@@ -359,12 +359,14 @@ $aspirantService = new aspirantService();
             var roles
             var idRol
             var idModulo
+            var namealumn
+            var estatealumn
 
             $(document).ready(function() {
 
                 fillSelectEnrollements()
                 fillSelectLevels()
-                searchAlumn()
+                
 
             });
 
@@ -407,8 +409,8 @@ $aspirantService = new aspirantService();
                     type: "POST",
                     success: function(data) {
                         if (data != "mal") {
-                            document.getElementById('nameAlumn').value = data['NAMEALUMN']
-                            document.getElementById('stateAlumn').value = data['ESTADO']
+                            document.getElementById('nameAlumn').value = 
+                            document.getElementById('stateAlumn').value = data
                         }
                     }
                 });
@@ -463,6 +465,28 @@ $aspirantService = new aspirantService();
                     document.getElementById('descriFuncion').value = data['DESCRIPCION']
                 });
             }
+            function enrrollNewAlumn(){
+                var cedAlumn = document.getElementById('dniAlumn').value
+                var codPeriod = document.getElementById('SelectPeriodModal').value
+                var codLevel = document.getElementById('SelectLevelModal').value
+                $.ajax({
+                url: "../../service/getEnrollementService.php?newEnrollAlumn=true",
+                data: { cedAlumn: cedAlumn, codPeriod: codPeriod, codLevel: codLevel},
+                type: "POST",
+                success: function (data) {
+                    if (data == "exito") {
+                        alert("El alumno ha sido matriculado exitosamente")
+                        $('#cerrarNue').click()
+                        $('#tblfunc').DataTable().ajax.reload()
+                    }
+                },
+            });
+            }
+
+
+
+
+
             </script>
 
 

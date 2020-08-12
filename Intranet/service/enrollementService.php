@@ -55,11 +55,26 @@ class enrollementService extends mainService{
           P.COD_PERSONA=T.COD_PERSONA
           AND P.CEDULA = '$alumn'
           AND T.COD_TIPO_PERSONA = 1 ");
-        while ($row = $consult->fetch_assoc()) {    
-            $datos['data'][] = $row;
+         while ($row = $consult->fetch_assoc()) {    
+            $datos["data"][]= $row;
           }
           echo json_encode($datos);
 
+    }
+    function newEnrollAlu($cedAlumn,$codPeriod,$codLevel){
+     $sql = ("call enrollAlumn(?,?,?)");
+     $stmt = $this->conex->prepare($sql);
+     $stmt->bind_param('iii',$cedAlumn,$codPeriod,$codLevel);
+     $stmt->execute();
+  if ($stmt->affected_rows){ 
+      $respuesta = "exito"; 
+      $stmt->close();  
+  }
+  if($respuesta=="exito"){
+      echo $respuesta;
+  }else{
+      echo "mal";
+  }
     }
         
 

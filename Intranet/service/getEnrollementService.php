@@ -14,6 +14,14 @@ if (isset($_GET['listEnroll'])) {
  if (isset($_GET['searchAlumn'])) {
   $enrollement->searchAlumn($_GET['idAlumnSearch']);
 }
+if (isset($_GET['newEnrollAlumn'])) {
+  $enrollement->newEnrollAlu($_POST['cedAlumn'],$_POST['codPeriod'],$_POST['codLevel']);
+}
+
+
+
+
+
 
 
 
