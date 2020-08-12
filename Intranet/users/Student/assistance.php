@@ -1,10 +1,13 @@
 <?php
+include '../../service/AsistenciasServicios.php';
+$asistencias = new AsistenciasServicios();
 session_start();
+
+$cod_alumno = $_SESSION['USU']['COD_PERSONA'];
 if (!isset($_SESSION['USU'])) {
-    header('Location: ../../../Seed/login.html');
+  header('Location: ../../../Seed/login.html');
 }
-include '../../service/studentService.php';
-$studentService = new studentService();
+$accion = "Aceptar";
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +50,7 @@ $studentService = new studentService();
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
-    <?php include("../../views/barNav.php");?>
+    <?php include("../../views/barNav.php"); ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -65,14 +68,14 @@ $studentService = new studentService();
             <img src="../../dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
-            <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
-            <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
+            <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
+            <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
+            <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
           </div>
         </div>
 
         <!-- Sidebar Menu -->
-        <?php include("../../views/menuEstudiante.php");?>
+        <?php include("../../views/menuEstudiante.php"); ?>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->
@@ -96,94 +99,152 @@ $studentService = new studentService();
           </div>
         </div><!-- /.container-fluid -->
       </section>
-
-      <div class="row justify-content-center ">
-          <div class="card-body">
-                <div class="table-responsive">
-                  <table id="t01" class="table table-bordered" width="100%" cellspacing="0">
-                    <thead>
-                      <tr>
-                        <th class="text-center">Fecha</th>
-                        <th class="text-center">Estado</th>
-                      </tr>
-                    </thead>
-<!--                     <tfoot>
-                      <tr>
-                        <th class="text-center">Fecha</th>
-                        <th class="text-center">Estado</th>
-                      </tr>
-                    </tfoot> -->
-                    <tbody>
+      <section class="full-reset text-center" style="padding: 40px 0;">
+        <div class="container-fluid">
+          <div class="container-flat-form">
+            <form action="" method="post">
+              <div class="row">
+                <div class="group-material col-xs-12 col-sm-8 col-sm-offset-2">
+                  <span style="color: #000000;">
+                    <p>Seleccione el periodo lectivo</p>
+                  </span>
+                  <select class="form-control" name="periodo">
+                    <option value="" disabled="" selected="">Selecciona el periodo</option>
                     <?php
-                       if ($result->num_rows > 0) {
-                           while ($row = $result->fetch_assoc()) {
+                    $result = $asistencias->periodo();
+                    foreach ($result as $opciones) :
                     ?>
-                      <tr>
-                        <td class="text-center"><?php echo $row["FECHA"]; ?></td>
-                          <?php if($row["ESTADO"]=="ASI"){?>
-                            <td class="text-center ">
-                            <div class="success icon-split">
-                              <span class="icon text-success">
-                              <i class="fas fa-check"></i></span>
-                              <span class="text-success">ASISTIÓ</span>
-                            </div></td>
-                            <?php } else if($row["ESTADO"]=="FJU"){  ?>
-                              <td class="text-center ">
-                              <div class="success icon-split">
-                                <span class="icon text-info">
-                                <i class="fas fa-flag"></i></span>
-                                <span class="text-info">FALTA JUSTIFICADA</span>
-                              </div></td>
-                            <?php } else if($row["ESTADO"]=="FIN"){  ?>
-                              <td class="text-center ">
-                              <div class="success icon-split">
-                                <span class="icon text-danger">
-                                <i class="fas fa-exclamation-triangle"></i></span>
-                                <span class="text-danger">FALTA INJUSTIFICADA</span>
-                              </div></td>
-                            <?php } ?>
-                      </tr>
-                      <?php
-                             }
-                         } 
-                         else { ?>
-                             <tr>
-                                 <td colspan="2" class="text-center">NO HAY REGISTROS</td>
-                             </tr>
-                      <?php } ?>
-                      </tbody>
-                  </table>
+                      <option value="<?php echo $opciones['COD_PERIODO_LECTIVO'] ?>"><?php echo $opciones['COD_PERIODO_LECTIVO'] ?></option>
+                    <?php endforeach ?>
+                  </select>
+                </div>
+                <div class="group-material col-xs-12 col-sm-8 col-sm-offset-2">
+                  <span style="color: #000000;">
+                    <p>Seleccione el quimestre</p>
+                  </span>
+                  <select class="form-control" name="quimestre">
+                    <option value="" disabled="" selected="">Selecciona el quimestre</option>
+                    <option value="QUIMESTRE1">Primer quimestre</option>
+                    <option value="QUIMESTRE2">Segundo quimestre</option>
+                  </select>
+                </div>
+                <div class="group-material col-xs-12 col-sm-8 col-sm-offset-2">
+                  <p class="text-center">
+                    <input type="submit" name="accionCalificacionTotal" value="Aceptar" class="btn btn-primary" style="margin-right: 20px;">
+                    <button type="reset" class="btn btn-info" style="margin-right: 20px;"><i class="zmdi zmdi-roller"></i> &nbsp;&nbsp; Limpiar</button>
+                  </p>
                 </div>
               </div>
-
-
-
+            </form>
           </div>
+        </div>
+        <div class="container-fluid">
+          <?php
+          if (isset($_POST['accionCalificacionTotal']) && ($_POST['accionCalificacionTotal'] == 'Aceptar') && ($_POST['quimestre'] == 'QUIMESTRE1')) {
+            $periodo = $_POST['periodo'];
+          ?>
+            <?php
+            ?>
+            <div class="table-responsive">
+              <table id="tablaEstudiantesCalificaciones" class="table-striped table-bordered table-condensed" style="width: 100%;">
+                <thead class="text-center">
+                  <tr>
+                    <th>NIVEL EDUCATIVO</th>
+                    <th>FECHA</th>
+                    <th>ESTADO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $result = $asistencias->asistenciasEstudiante($cod_alumno, $periodo);
+                  if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                  ?>
+                      <tr>
+                        <!--DATOS DE LA TABLA SEDES-->
+                        <td><?php echo $row["COD_NIVEL_EDUCATIVO"]; ?></td>
+                        <td><?php echo $row["FECHA"]; ?></td>
+                        <td><?php echo $row["ESTADO"]; ?></td>
+                      </tr>
+                    <?php   }
+                  } else {
+                    ?>
+                    <tr>
+                      <td colspan=3>No hay datos en la tabla</td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
+          } ?>
 
+        </div>
+        <div class="container-fluid">
+          <?php
+          if (isset($_POST['accionCalificacionTotal']) && ($_POST['accionCalificacionTotal'] == 'Aceptar') && ($_POST['quimestre'] == 'QUIMESTRE2')) {
+            $periodo = $_POST['periodo'];
+          ?>
+            <?php
+            ?>
+            <div class="table-responsive">
+              <table id="tablaEstudiantesCalificaciones" class="table-striped table-bordered table-condensed" style="width: 100%;">
+                <thead class="text-center">
+                  <tr>
+                    <th>NIVEL EDUCATIVO</th>
+                    <th>FECHA</th>
+                    <th>ESTADO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $result = $asistencias->asistenciasEstudiante($cod_alumno, $periodo);
+                  if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                  ?>
+                      <tr>
+                        <!--DATOS DE LA TABLA SEDES-->
+                        <td><?php echo $row['COD_NIVEL_EDUCATIVO']; ?></td>
+                        <td><?php echo $row["FECHA"]; ?></td>
+                        <td><?php echo $row["ESTADO"]; ?></td>
+                      </tr>
+                    <?php   }
+                  } else {
+                    ?>
+                    <tr>
+                      <td colspan=3>No hay datos en la tabla</td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          <?php
+          } ?>
+        </div>
+      </section>
 
       <!-- right col -->
     </div>
     <!-- /.row (main row) -->
   </div><!-- /.container-fluid -->
-  </section>
 
   </div>
 
   <!-- /.content-wrapper -->
 
-    <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-            <p>
-                Copyright &copy;
-                <script>
-                    document.write(new Date().getFullYear());
-                </script> All rights reserved | SeedSchool
-            </p>
-        </div>
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <p>
+        Copyright &copy;
+        <script>
+          document.write(new Date().getFullYear());
+        </script> All rights reserved | SeedSchool
+      </p>
+    </div>
 
-    </footer>
+  </footer>
 
-    
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
