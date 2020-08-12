@@ -8,6 +8,7 @@ class LoginService extends MainService {
         $result = $this->conex->query("SELECT
         u.NOMBRE_USUARIO as USERNAME,
         u.CLAVE as PASS,
+        u.COD_PERSONA AS COD_PERSONA,
         R.NOMBRE as ROL,
         P.NOMBRE as PNAME,
         P.APELLIDO as P2NAME
