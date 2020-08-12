@@ -58,6 +58,7 @@ if (isset($_POST['accionSede']) && ($_POST['accionSede'] == 'Añadir')) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -94,7 +95,7 @@ if (isset($_POST['accionSede']) && ($_POST['accionSede'] == 'Añadir')) {
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <?php include("../../views/barNav.php"); ?>
+        <?php include("../../views/barNav.php");?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -119,7 +120,7 @@ if (isset($_POST['accionSede']) && ($_POST['accionSede'] == 'Añadir')) {
                 </div>
 
                 <!-- Sidebar Menu -->
-                <?php include("../../views/menuAdmin.php"); ?>
+                <?php include("../../views/menuAdmin.php");?>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
@@ -132,7 +133,7 @@ if (isset($_POST['accionSede']) && ($_POST['accionSede'] == 'Añadir')) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Gestion Sede</h1>
+                            <h1>Gestion Edificio</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -234,15 +235,15 @@ if (isset($_POST['accionSede']) && ($_POST['accionSede'] == 'Añadir')) {
                     </form>
                 </div>
             </section>
+
+
         </div>
 
 
         <!-- Main content -->
     </div>
     <!-- /.content-wrapper -->
-
     <?php include("../../views/footer.php"); ?>
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->

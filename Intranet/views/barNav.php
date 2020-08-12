@@ -8,7 +8,7 @@
                     <a href="./index.php" class="nav-link">Inicio</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="../../login/logout.php" class="nav-link">salir</a>
+                    <a href="../../login/logout.php" class="nav-link">Cerrar Sesión</a>
                 </li>
             </ul>
             

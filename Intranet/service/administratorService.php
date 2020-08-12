@@ -18,7 +18,5 @@ class administratorService extends mainService{
 
 
 
+
 }
-
-
-?>

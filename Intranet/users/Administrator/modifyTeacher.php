@@ -46,7 +46,7 @@ $studentService = new studentService();
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <?php include("../../views/barNav.php");?>
+        <?php include("../../views/barNav.php"); ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -71,7 +71,7 @@ $studentService = new studentService();
                 </div>
 
                 <!-- Sidebar Menu -->
-                <?php include("../../views/menuAdmin.php");?>
+                <?php include("../../views/menuAdmin.php"); ?>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
@@ -192,7 +192,7 @@ $studentService = new studentService();
         </div>
         <!-- /.content-wrapper -->
 
-        <?php include("../../views/footer.php");?>
+        <?php include("../../views/footer.php"); ?>
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -236,4 +236,4 @@ $studentService = new studentService();
     <script src="../../dist/js/demo.js"></script>
 </body>
 
-</html>
+</html> 

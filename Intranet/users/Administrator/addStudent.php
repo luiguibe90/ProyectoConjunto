@@ -97,7 +97,101 @@ if (isset($_POST["btn_subR"])) {
                 </div>
 
                 <!-- Sidebar Menu -->
-                <?php include("../../views/menuAdmin.php");?>
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+               <li class="nav-item">
+                            <a href="index.php" class="nav-link active">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Inicio
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">Gestionar</li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-users red-bg"></i>
+                                <p>
+                                    Personas
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="./managTeacher.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Profesores</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./managStudent.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Alumnos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../index3.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Representantes</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./managAspirant.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Aspirantes</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-users red-bg"></i>
+                                <p>
+                                    Periodo
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="./assignPeriod.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gestión de Periodo</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./assignTeacher.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Asignación Docente</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./assignRegistration.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Matrícula</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./managLevel.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Niveles</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./assignSubject.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Asignaturas</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->

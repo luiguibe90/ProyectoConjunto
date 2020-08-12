@@ -44,9 +44,10 @@ $aspirantService = new aspirantService();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -79,7 +80,100 @@ $aspirantService = new aspirantService();
                 </div>
 
                 <!-- Sidebar Menu -->
-                <?php include("../../views/menuAdmin.php"); ?>
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+                        <li class="nav-item">
+                            <a href="index.php" class="nav-link active">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Inicio
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header">Gestionar</li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-users red-bg"></i>
+                                <p>
+                                    Personas
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="./managTeacher.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Profesores</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./managStudent.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Alumnos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../index3.html" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Representantes</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./managAspirant.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Aspirantes</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-users red-bg"></i>
+                                <p>
+                                    Periodo
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="./assignPeriod.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gestión de Periodo</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./assignTeacher.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Asignación Docente</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./assignRegistration.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Matrícula</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./managLevel.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Niveles</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./assignSubject.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Asignaturas</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                </nav>
             </div>
         </aside>
         <!-- Content Wrapper. Contains page content -->
@@ -101,465 +195,274 @@ $aspirantService = new aspirantService();
                 </div>
             </section>
 
-            <br><br>
+            <section>
 
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <b>GESTIÓN MATRÍCULA</b>
-                        </div>
-                        <div class="card-body">
-                            <center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoModulo">Nuevo Alumno</button></center>
-                            <br><br>
-                            <div id="tblModulos_wrapper" class="dataTables_wrapper no-footer">
-                                <div class="dataTables_length" id="tblModulos_length"><label>Mostrar <select name="tblModulos_length" aria-controls="tblModulos" class="">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select> Entradas</label></div>
-                                <div id="tblModulos_filter" class="dataTables_filter"><label>Buscar:<input type="search" class="" placeholder="" aria-controls="tblModulos"></label></div>
-                                <table class="display responsive nowrap dataTable no-footer" style="width:100%; cursor: pointer;" id="tblModulos" role="grid" aria-describedby="tblModulos_info">
+                <br><br>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <b>GESTIÓN MATRICULAS</b>
+                            </div>
+                            <div class="card-body">
+                                <center><button type="button" class="btn btn-success" data-toggle='modal'
+                                        data-target='#newRoll'>Matricular Estudiantes</button></center>
+                                <br><br>
+                                <center>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="inputGroupSelect01">Perido</label>
+                                        </div>
+                                        <select class="custom-select" id="selectPeriods">
+
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button"
+                                                onclick="tableEnroll()">Buscar</button>
+                                        </div>
+                                    </div>
+                                </center>
+                                <br><br>
+                                <table class="display responsive nowrap" style="width:100%; cursor: pointer;"
+                                    id="tblenroll">
                                     <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="tblModulos" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending" style="width: 75.2px;">Id</th>
-                                            <th class="sorting" tabindex="0" aria-controls="tblModulos" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending" style="width: 177.2px;">Nombre</th>
-                                            <th class="sorting" tabindex="0" aria-controls="tblModulos" rowspan="1" colspan="1" aria-label="Estado: activate to sort column ascending" style="width: 152px;">Estado</th>
-                                            <th class="sorting" tabindex="0" aria-controls="tblModulos" rowspan="1" colspan="1" aria-label=": activate to sort column ascending" style="width: 42.4px;"></th>
+                                        <tr>
+                                            <th>COD Alumno</th>
+                                            <th>Alumno</th>
+                                            <th>Nivel</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="odd">
-                                            <td valign="top" colspan="4" class="dataTables_empty">Sin resultados encontrados</td>
-                                        </tr>
                                     </tbody>
                                 </table>
-                                <div class="dataTables_info" id="tblModulos_info" role="status" aria-live="polite">Mostrando 0 to 0 of 0 Entradas</div>
-                                <div class="dataTables_paginate paging_simple_numbers" id="tblModulos_paginate"><a class="paginate_button previous disabled" aria-controls="tblModulos" data-dt-idx="0" tabindex="-1" id="tblModulos_previous">Anterior</a><span></span><a class="paginate_button next disabled" aria-controls="tblModulos" data-dt-idx="1" tabindex="-1" id="tblModulos_next">Siguiente</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br><br>
+
+
+                <div class="modal fade" id="newRoll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Matricular Alumno</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">DNI </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="DNI" aria-label="Username"
+                                        aria-describedby="basic-addon1" id="dniAlumn">
+                                    <button type="button" class="btn btn-success" data-toggle='modal'
+                                        data-target='#AlumnSearch' onclick="searchAlumn()">Buscar</button>
+
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Periodo</label>
+                                    </div>
+                                    <select name="Periods" class="custom-select" id="SelectPeriodModal">
+                                    </select>
+
+                                </form>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Nivel</label>
+                                    </div>
+                                    <select name="Periods" class="custom-select" id="SelectLevelModal">
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" onclick="crearNuevo()">Matricular</button>
+                                <button id="cerrar" type="button" class="btn btn-danger"
+                                    data-dismiss="modal">Cerrar</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal Alumn Search -->
+                <div class="modal fade" id="AlumnSearch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Datos del Alumno</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Nombres del
+                                            Alumno</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Nombre Nivel"
+                                        aria-label="Username" aria-describedby="basic-addon1" id="nameAlumn">
+
+                                </div>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Estado</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Estado" aria-label="Username"
+                                        aria-describedby="basic-addon1" id="stateAlumn">
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" onclick="regresar()">Guardar</button>
+                                <button id="cerrar" type="button" class="btn btn-danger"
+                                    data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            <!-- Modal -->
-            <div class="modal fade" id="nuevoModulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Alumno</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">Nombre del Alumno</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="Username" aria-describedby="basic-addon1" id="nombre">
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">Estado del Alumno</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Aprobado / Reprobado" aria-label="Username" aria-describedby="basic-addon1" id="nombre">
-                            </div>
-                        </div>
-
-
-                        <div class="modal-body">
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">Estado de Matricula</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="ACT / INC" aria-label="Username" aria-describedby="basic-addon1" id="nombre">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" onclick="crearNuevo()">Guardar</button>
-                            <button id="cerrar" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
 
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+
+            </section>
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+                integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+                crossorigin="anonymous"></script>
             <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
             <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
             <script>
-                var id
-                var tblfunc
-                var roles
-                var idRol
-                var idModulo
+            var id
+            var tblenroll
+            var roles
+            var idRol
+            var idModulo
 
-                $(document).ready(function() {
+            $(document).ready(function() {
 
-                    var tblModulos = $('#tblModulos').DataTable({
-                        "ajax": "consultas/modulos.php?listaModulos=true",
-                        "columns": [{
-                                "data": "COD_MODULO"
-                            },
-                            {
-                                "data": "NOMBRE"
-                            },
-                            {
-                                "data": "ESTADO"
-                            },
-                            {
-                                "data": null,
-                                "defaultContent": "<button type='button' class='btn btn-sm rounded btn-warning' data-toggle='modal' data-target='#exampleModal'>Editar</button>&nbsp<button class='btn btn-sm rounded btn-danger' onclick='eliminarModulo()'>Desactivar</button>",
-                                orderData: false
-                            },
-                        ],
-                        "language": {
-                            "emptyTable": "No hay información",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ Entradas",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "Sin resultados encontrados",
-                            "paginate": {
-                                "first": "Primero",
-                                "last": "Ultimo",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
-                            }
+                fillSelectEnrollements()
+                fillSelectLevels()
+                searchAlumn()
+
+            });
+
+
+            function fillSelectEnrollements() {
+                $.ajax({
+                    url: "periodGetService.php?selectPeriods=true",
+                    data: {},
+                    type: "POST",
+                    success: function(data) {
+                        if (data != "mal") {
+                            var selectPeriods = document.getElementById("selectPeriods");
+                            selectPeriods.innerHTML = data;
+                            var SelectPeriodModal = document.getElementById("SelectPeriodModal");
+                            SelectPeriodModal.innerHTML = data;
                         }
-                    });
-                    $('#tblModulos tbody').on('click', 'td', function() {
-                        var data = tblModulos.row($(this).parents('tr')).data();
-                        id = data['COD_MODULO'];
-                        document.getElementById('nombreModulo').value = data['NOMBRE']
-                        document.getElementById('estadoModulo').value = data['ESTADO']
-                    });
-
-                    $.fn.dataTable.ext.errMode = 'none'
-
-                    llenarSelectModulos()
-                    llenarSelectRoles()
-                    llenarVarios()
-
+                    }
                 });
+            }
 
-                function tablaFunciones() {
-                    var modulo = document.getElementById('selectModulos').value
-                    tblfunc = $('#tblfunc').DataTable({
-                        "ajax": "consultas/modulos.php?listaFunciones=true&modulo=" + modulo,
-                        "columns": [{
-                                "data": "COD_FUNCIONALIDAD",
-                                visible: false
-                            },
-                            {
-                                "data": "URL_PRINCIPAL"
-                            },
-                            {
-                                "data": "NOMBRE"
-                            },
-                            {
-                                "data": "DESCRIPCION"
-                            },
-                            {
-                                "data": null,
-                                "defaultContent": "<button type='button' class='btn btn-sm rounded btn-warning' data-toggle='modal' data-target='#modalFuncion'>Editar</button>&nbsp<button class='btn btn-sm rounded btn-danger' onclick='eliminarFuncion()'>Eliminar</button>",
-                                orderData: false
-                            },
-                        ],
-                        "destroy": true,
-                        "language": {
-                            "emptyTable": "No hay información",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ Entradas",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "Sin resultados encontrados",
-                            "paginate": {
-                                "first": "Primero",
-                                "last": "Ultimo",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
-                            }
+            function fillSelectLevels() {
+                $.ajax({
+                    url: "../../service/getEnrollementService.php?selectLevels=true",
+                    data: {},
+                    type: "POST",
+                    success: function(data) {
+                        if (data != "mal") {
+                            var SelectLevelModal = document.getElementById("SelectLevelModal");
+                            SelectLevelModal.innerHTML = data;
                         }
-                    });
-                    $('#tblfunc tbody').on('click', 'td', function() {
-                        var data = tblfunc.row($(this).parents('tr')).data();
-                        idFunc = data['COD_FUNCIONALIDAD'];
-                        document.getElementById('urlPrincipal').value = data['URL_PRINCIPAL']
-                        document.getElementById('nombreFuncion').value = data['NOMBRE']
-                        document.getElementById('descriFuncion').value = data['DESCRIPCION']
-                    });
-                }
+                    }
+                });
+            }
 
-                function tablaRoles() {
-                    var rol = document.getElementById('selectRoles').value
-                    roles = $('#roles').DataTable({
-                        "ajax": "consultas/modulos.php?listaRoles=true&rol=" + rol,
-                        "columns": [{
-                                "data": "COD_ROL",
-                                visible: false
-                            },
-                            {
-                                "data": "COD_MODULO",
-                                visible: false
-                            },
-                            {
-                                "data": "NOMBRE"
-                            },
-                            {
-                                "data": null,
-                                "defaultContent": "<button class='btn btn-sm rounded btn-danger' onclick='eliminarRol()'>Eliminar</button>",
-                                orderData: false
-                            },
-                        ],
-                        "destroy": true,
-                        "language": {
-                            "emptyTable": "No hay información",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ Entradas",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "Sin resultados encontrados",
-                            "paginate": {
-                                "first": "Primero",
-                                "last": "Ultimo",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
-                            }
+            function searchAlumn() {
+                var idAlumnSearch = document.getElementById('dniAlumn').value
+                $.ajax({
+                    url: "../../service/getEnrollementService.php?searchAlumn=&idAlumnSearch=" + idAlumnSearch,
+                    data: {},
+                    type: "POST",
+                    success: function(data) {
+                        if (data != "mal") {
+                            document.getElementById('nameAlumn').value = data['NAMEALUMN']
+                            document.getElementById('stateAlumn').value = data['ESTADO']
                         }
-                    });
-                    $('#roles tbody').on('click', 'td', function() {
-                        var data = roles.row($(this).parents('tr')).data();
-                        idModulo = data['COD_MODULO'];
-                        idRol = data['COD_ROL']
-                        document.getElementById('nombreModulo').value = data['NOMBRE']
-                        document.getElementById('estadoModulo').value = data['ESTADO']
-                    });
-                }
+                    }
+                });
+            }
+            
 
-                function eliminarFuncion() {
-                    $.ajax({
-                        url: "./consultas/modulos.php?eliminarFuncion=true&idFuncion=" + idFunc,
-                        data: {},
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("La funcionalidad ha sido eliminado exitosamente")
-                                $('#tblfunc').DataTable().ajax.reload()
-                            }
+
+            function tableEnroll() {
+                var modulo = document.getElementById('selectPeriods').value
+                tblenroll = $('#tblenroll').DataTable({
+                    "ajax": "../../service/getEnrollementService.php?listEnroll=true&modulo=" + modulo,
+                    "columns": [{
+                            "data": "CODALUMN",
                         },
-                    });
-                }
-
-                function eliminarRol() {
-                    $.ajax({
-                        url: "./consultas/modulos.php?eliminarRol=true&idRol=" + idRol + '&idModulo=' + idModulo,
-                        data: {},
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("El módulo ha sido eliminado exitosamente")
-                                $('#roles').DataTable().ajax.reload()
-                            }
+                        {
+                            "data": "NAMEPEOPLE"
                         },
-                    });
-                }
-
-                function llenarSelectModulos() {
-                    $.ajax({
-                        url: "./consultas/modulos.php?selectModulos=true",
-                        data: {},
-                        type: "POST",
-                        success: function(data) {
-                            if (data != "mal") {
-                                var selectModulos = document.getElementById("selectModulos");
-                                selectModulos.innerHTML = data;
-                                var selectModulosFuncionalidad = document.getElementById("selectModulosFuncionalidad");
-                                selectModulosFuncionalidad.innerHTML = data;
-                            }
+                        {
+                            "data": "LEVEL"
+                        },
+                        {
+                            "data": null,
+                            "defaultContent": "<button type='button' class='btn btn-sm rounded btn-warning' data-toggle='modal' data-target='#modalFuncion'>Editar</button>&nbsp<button class='btn btn-sm rounded btn-danger' onclick='eliminarFuncion()'>Eliminar</button>",
+                            orderData: false
+                        },
+                    ],
+                    "destroy": true,
+                    "language": {
+                        "emptyTable": "No hay información",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                        "processing": "Procesando...",
+                        "search": "Buscar:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
                         }
-                    });
-                }
-
-                function llenarSelectRoles() {
-                    $.ajax({
-                        url: "./consultas/modulos.php?selectRoles=true",
-                        data: {},
-                        type: "POST",
-                        success: function(data) {
-                            if (data != "mal") {
-                                var selectRoles = document.getElementById("selectRoles");
-                                selectRoles.innerHTML = data;
-                            }
-                        }
-                    });
-                }
-
-                function llenarVarios() {
-                    $.ajax({
-                        url: "./consultas/modulos.php?selectModulos=true",
-                        data: {},
-                        type: "POST",
-                        success: function(data) {
-                            if (data != "mal") {
-                                var selectModulos = document.getElementById("selecmodulos");
-                                selectModulos.innerHTML = data;
-                            }
-                        }
-                    });
-                    $.ajax({
-                        url: "./consultas/modulos.php?selectRoles=true",
-                        data: {},
-                        type: "POST",
-                        success: function(data) {
-                            if (data != "mal") {
-                                var selectRoles = document.getElementById("selecroles");
-                                selectRoles.innerHTML = data;
-                            }
-                        }
-                    });
-                }
-
-                function eliminarModulo() {
-                    $.ajax({
-                        url: "./consultas/modulos.php?eliminarModulo=true&id=" + id,
-                        data: {},
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("El módulo ha sido eliminado exitosamente")
-                                $('#tblModulos').DataTable().ajax.reload()
-                            }
-                        },
-                    });
-                }
-
-                function guardarCambios() {
-                    var nombre = document.getElementById('nombreModulo').value
-                    var estado = document.getElementById('estadoModulo').value
-                    $.ajax({
-                        url: "./consultas/modulos.php?editarModulo=true&id=" + id,
-                        data: {
-                            nombre: nombre,
-                            estado: estado
-                        },
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("El módulo ha sido editado exitosamente")
-                                $('#cerrarModal').click()
-                                $('#tblModulos').DataTable().ajax.reload()
-                            }
-                        },
-                    });
-                }
-
-                function crearNuevo() {
-                    var nombre = document.getElementById('nombre').value
-                    $.ajax({
-                        url: "./consultas/modulos.php?nuevoModulo=true",
-                        data: {
-                            nombre: nombre
-                        },
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("El módulo ha sido registrado exitosamente")
-                                $('#cerrar').click()
-                                $('#tblModulos').DataTable().ajax.reload()
-                            }
-                        },
-                    });
-                }
-
-                function guardarNuevoRol() {
-                    var rol = document.getElementById('selecroles').value
-                    var modulo = document.getElementById('selecmodulos').value
-                    $.ajax({
-                        url: "./consultas/modulos.php?nuevoRol=true",
-                        data: {
-                            rol: rol,
-                            modulo: modulo
-                        },
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("El módulo ha sido registrado exitosamente")
-                                $('#cerrarRol').click()
-                                $('#roles').DataTable().ajax.reload()
-                            }
-                        },
-                    });
-                }
-
-                function guardarFuncion() {
-                    var url = document.getElementById('urlPrincipal').value
-                    var nombre = document.getElementById('nombreFuncion').value
-                    var descripcion = document.getElementById('descriFuncion').value
-                    $.ajax({
-                        url: "./consultas/modulos.php?editarFuncion=true",
-                        data: {
-                            urlP: url,
-                            nombre: nombre,
-                            descripcion: descripcion,
-                            id: idFunc
-                        },
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("Los cambios han sido guardados exitosamente")
-                                $('#cerrarFuncion').click()
-                                $('#tblfunc').DataTable().ajax.reload()
-                            }
-                        },
-                    });
-                }
-
-                function guardarFuncionNuevo() {
-                    var url = document.getElementById('urlPrincipalNuevo').value
-                    var nombre = document.getElementById('nombreFuncionNuevo').value
-                    var descripcion = document.getElementById('descriFuncionNuevo').value
-                    var selectNuevo = document.getElementById('selectModulosFuncionalidad').value
-                    $.ajax({
-                        url: "./consultas/modulos.php?nuevaFuncion=true",
-                        data: {
-                            urlP: url,
-                            nombre: nombre,
-                            descripcion: descripcion,
-                            modulo: selectNuevo
-                        },
-                        type: "POST",
-                        success: function(data) {
-                            if (data == "exito") {
-                                alert("La nueva funcionalidad ha sido guardada exitosamente")
-                                $('#cerrarNue').click()
-                                $('#tblfunc').DataTable().ajax.reload()
-                            }
-                        },
-                    });
-                }
+                    }
+                });
+                $('#tblenroll tbody').on('click', 'td', function() {
+                    var data = tblenroll.row($(this).parents('tr')).data();
+                    id = data['CODALUMN'];
+                    document.getElementById('urlPrincipal').value = data['URL_PRINCIPAL']
+                    document.getElementById('nombreFuncion').value = data['NOMBRE']
+                    document.getElementById('descriFuncion').value = data['DESCRIPCION']
+                });
+            }
             </script>
 
 
@@ -574,12 +477,12 @@ $aspirantService = new aspirantService();
         <!-- ./wrapper -->
 
         <!-- jQuery -->
-        <script src="../../plugins/jquery/jquery.min.js"></script>
+
         <!-- jQuery UI 1.11.4 -->
         <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
-            $.widget.bridge('uibutton', $.ui.button)
+        $.widget.bridge('uibutton', $.ui.button)
         </script>
         <!-- Bootstrap 4 -->
         <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -598,13 +501,16 @@ $aspirantService = new aspirantService();
         <script src="../../plugins/moment/moment.min.js"></script>
         <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
         <!-- Tempusdominus Bootstrap 4 -->
-        <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js">
+        </script>
         <!-- Summernote -->
         <script src="../../plugins/summernote/summernote-bs4.min.js"></script>
         <!-- AdminLTE App -->
         <script src="../../dist/js/adminlte.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="../../dist/js/demo.js"></script>
+
+
 
 </body>
 <?php include("../../views/footer.php"); ?>

@@ -51,6 +51,7 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
     $infraestructura->eliminarEdificio($_GET['eliminarEdificio']);
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -87,7 +88,7 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <?php include("../../views/barNav.php"); ?>
+        <?php include("../../views/barNav.php");?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -105,9 +106,9 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
                         <img src="../../dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME']); ?>
-                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME']); ?>
-                        <a href="#" class="d-block"><?php echo $temp[0]; ?></br> <?php echo $temp2[0]; ?> </a>
+                        <?php $temp = explode(" ", $_SESSION['USU']['PNAME'] ); ?>
+                        <?php $temp2 = explode(" ", $_SESSION['USU']['P2NAME'] ); ?>
+                        <a href="#" class="d-block"><?php echo $temp[0];?></br> <?php echo $temp2[0];?> </a>
                     </div>
                 </div>
 
@@ -145,16 +146,16 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
 
             <section class="content">
                 <div class="container-fluid">
-                    <form action="" name="edificio" id="edificio" method="post">
+                    <form action="" name="aulas" id="aulas" method="post">
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
-                                <thead>
+                                <thead >
                                     <tr>
-                                        <th>Código</th>
+                                        <th>Código Edificio</th>
                                         <th>Código Sede</th>
                                         <th>Nombre</th>
                                         <th>Cantidad de Pisos</th>
-                                        <th>Actualizar</th>
+                                        <th>Modificar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -238,7 +239,6 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
     </div>
     <!-- /.content-wrapper -->
     <?php include("../../views/footer.php");?>
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
@@ -253,7 +253,7 @@ if (isset($_POST['accionEdificios']) && ($_POST['accionEdificios'] == 'Añadir')
     <script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-        $.widget.bridge('uibutton', $.ui.button)
+    $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

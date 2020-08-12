@@ -48,32 +48,7 @@ $studentService = new studentService();
         <!-- Site wrapper -->
         <div class="wrapper">
             <!-- Navbar -->
-            <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                    </li>
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <a href="../users/student.html" class="nav-link">Inicio</a>
-                    </li>
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link">Contacto</a>
-                    </li>
-                </ul>
-
-                <!-- SEARCH FORM -->
-                <form class="form-inline ml-3">
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </nav>
+            <?php include("../../views/barNav.php"); ?>
             <!-- /.navbar -->
 
             <!-- Main Sidebar Container -->
@@ -98,101 +73,7 @@ $studentService = new studentService();
                     </div>
 
                     <!-- Sidebar Menu -->
-                    <nav class="mt-2">
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-                            <li class="nav-item">
-                                <a href="index.php" class="nav-link active">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Inicio
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon ion-ios-book"></i>
-                                    <p>
-                                        Calificaciones Alumnos
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="./addGrade.php" class="nav-link">
-                                            <i class="far ion-ios-book-outline av-icon"></i>
-                                            <p>Ingreso Calificaciones</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="./modifyGrade.php" class="nav-link">
-                                            <i class="far ion-ios-book-outline av-icon"></i>
-                                            <p>Modificación Calificaciones</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="./reportGrade.php" class="nav-link">
-                                            <i class="far ion-ios-book-outline av-icon"></i>
-                                            <p>Reporte Calificaciones</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon ion-ios-book"></i>
-                                    <p>
-                                        Asistencia Alumnos
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="./attendanceStudent.php" class="nav-link">
-                                            <i class="far ion-ios-book-outline av-icon"></i>
-                                            <p>Registro Asistencia</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="./modifyattendanceStudent.php" class="nav-link">
-                                            <i class="far ion-ios-book-outline av-icon"></i>
-                                            <p>Modificación Asistencia</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="./reportattendanceStudent.php" class="nav-link">
-                                            <i class="far ion-ios-book-outline av-icon"></i>
-                                            <p>Reporte Asistencia</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon ion-ios-book"></i>
-                                    <p>
-                                        Listado Alumnos
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="./reportStudent.php" class="nav-link">
-                                            <i class="far ion-ios-book-outline av-icon"></i>
-                                            <p>Reporte de Alumnos</p>
-                                        </a>
-                                    </li>
-
-
-                                </ul>
-                            </li>
-
-                    </nav>
+                    <?php include("../../views/menuDocente.php"); ?>
                     <!-- /.sidebar-menu -->
                 </div>
                 <!-- /.sidebar -->
@@ -221,9 +102,23 @@ $studentService = new studentService();
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label>Seleccione Periodo</label>
+                                    <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 70%;">
+                                        <option selected="selected">Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Seleccione Nivel</label>
                                     <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" style="width: 70%;">
                                         <option selected="selected">Alabama</option>
                                         <option>Alaska</option>
@@ -313,13 +208,7 @@ $studentService = new studentService();
         </section>
 
         </div>
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.5
-            </div>
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
-        </footer>
+        <?php include("../../views/footer.php"); ?>
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">

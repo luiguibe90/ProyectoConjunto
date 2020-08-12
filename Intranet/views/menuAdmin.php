@@ -67,7 +67,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./assignLevel.php" class="nav-link">
+                    <a href="././managLevel.php.php.php" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Niveles</p>
                     </a>
@@ -93,7 +93,7 @@
                     <a href="managCampus.php" class="nav-link">
                         <!--crud sedes-->
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Sedes</p>
+                        <p>Sede</p>
                     </a>
                 </li>
                 <li class="nav-item">

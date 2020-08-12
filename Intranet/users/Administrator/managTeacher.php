@@ -121,6 +121,18 @@ $countTeachers = $administratorService->countTypePeople(3);
                             <a href="addTeacher.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3><?php echo $countTeachers ?></h3>
+                                <p>Modificar Profesor</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="viewTeacher.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
             </section>
         </div>
         <?php include("../../views/footer.php"); ?>

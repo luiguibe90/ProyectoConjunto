@@ -44,9 +44,6 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
         $_POST['tipo_aula'],
         $_POST['piso_aula'],
         $_POST['codigo_aula_comparar'],
-
-
-
     );
 } else if (isset($_GET["modificarAula"])) {
     $result = $infraestructura->encontrarAula($_GET['modificarAula']);
@@ -100,7 +97,7 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <?php include("../../views/barNav.php"); ?>
+        <?php include("../../views/barNav.php");?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -161,7 +158,7 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
                     <form action="" name="aulas" id="aulas" method="post">
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
-                                <thead class="text-center">
+                                <thead >
                                     <tr>
                                         <th>Código</th>
                                         <th>Código Edificio</th>
@@ -259,70 +256,24 @@ if (isset($_POST['accionAula']) && ($_POST['accionAula'] == 'Añadir')) {
                                             </div>
                                             <p class="text-center">
                                                 <input type="submit" name="accionAula" value="Modificar" class="btn btn-primary" style="margin-right: 20px;">
-                                                
+
                                             </p>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
+            </section>
         </div>
-        <!--<div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Modificar Aula</h3>
-                                </div>
-                                
-                                <form id="formRepresentative" role="form" action="" data-toggle="validator" method="post">
-                                    <div class="card-body">
-
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Nombre Aula</label>
-                                            <input type="text" class="form-control" id="exampleText" name="nameAula" placeholder="Ingrese Nombre">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Capacidad</label>
-                                            <input type="text" class="form-control" id="exampleText" name="capAula" placeholder="Ingrese la capacidad del Aula" maxlength="10">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="aulaProfesores">Tipo</label>
-                                            <input type="text" class="form-control" id="exampleText" name="capTipo" placeholder="Ingrese el Tipo de Aula">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Piso</label>
-                                            <input type="text" class="form-control" id="exampleText" name="Piso" placeholder="Ingrese el piso en que se encuentra la Aula">
-                                        </div>
-
-                                    </div>
-                                   
-
-                                </form>
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-                </div>-->
-
-
-        </section>
-
-
     </div>
 
 
     <!-- Main content -->
     </div>
     <!-- /.content-wrapper -->
-    <?php include("../../views/footer.php");?>                                                  
-   
-
+    <?php include("../../views/footer.php");?>
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
