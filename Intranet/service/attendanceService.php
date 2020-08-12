@@ -30,7 +30,7 @@ class attendanceService extends mainService
         //OJO PARA DISCRIMINAR POR PARALELOS EN CASO DE QUE SEA 2 CURSOS DE LOS MISMOS
         //EL JOIN CON LA TABLA ASIGNATURA PERIODO Y MATRICULA PERIODO TE SIRVE PERO HAY QUE VER
         //LA FORMA PARA QUE TRAIGA LOS DATOS DEL ESTUDIANTE
-        return $this->conexion->query("SELECT persona.COD_PERSONA, persona.APELLIDO, persona.NOMBRE
+        return $this->conex->query("SELECT persona.COD_PERSONA, persona.APELLIDO, persona.NOMBRE
                                        FROM persona 
                                        INNER JOIN matricula_periodo
                                        ON persona.COD_PERSONA = matricula_periodo.COD_ALUMNO
@@ -38,7 +38,7 @@ class attendanceService extends mainService
     }
     function ingresarAsistencia($cod_periodo_lectivo, $cod_alumno, $cod_nivel_educativo, $fecha, $estado)
     {
-        $stmt = $this->conexion->prepare("INSERT INTO asistencia_periodo (COD_PERIODO_LECTIVO,COD_ALUMNO,COD_NIVEL_EDUCATIVO, 
+        $stmt = $this->conex->prepare("INSERT INTO asistencia_periodo (COD_PERIODO_LECTIVO,COD_ALUMNO,COD_NIVEL_EDUCATIVO, 
         FECHA,ESTADO)
         VALUES (?,?,?,?,?)");
         $stmt->bind_param('sisss', $cod_periodo_lectivo, $cod_alumno, $cod_nivel_educativo, $fecha, $estado);
@@ -49,7 +49,7 @@ class attendanceService extends mainService
     //PARA VISUALIZAR DEL ESTUDIANTE
     function asignaturasEstudiante($cod_alumno, $cod_periodo_lectivo)
     {
-        return $this->conexion->query("SELECT asignatura_periodo.COD_ASIGNATURA,asignatura.NOMBRE
+        return $this->conex->query("SELECT asignatura_periodo.COD_ASIGNATURA,asignatura.NOMBRE
         FROM asignatura_periodo
         INNER JOIN matricula_periodo ON matricula_periodo.COD_NIVEL_EDUCATIVO = asignatura_periodo.COD_NIVEL_EDUCATIVO
         INNER JOIN asignatura ON asignatura.COD_ASIGNATURA = asignatura_periodo.COD_ASIGNATURA
@@ -63,7 +63,7 @@ class attendanceService extends mainService
     //PARA VISUALiZAR EN EL REPRESENTANTE
     function datosEstudiante($cod_representante)
     {
-        return $this->conexion->query("SELECT COD_PERSONA,APELLIDO,NOMBRE FROM persona 
+        return $this->conex->query("SELECT COD_PERSONA,APELLIDO,NOMBRE FROM persona 
         WHERE COD_PERSONA_REPRESENTANTE='" . $cod_representante . "'");
     }
 }

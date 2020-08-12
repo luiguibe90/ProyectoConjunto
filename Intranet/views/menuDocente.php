@@ -32,12 +32,12 @@
                         <p>Modificación Calificaciones</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="./reportGrade.php" class="nav-link">
                         <i class="far ion-ios-book-outline av-icon"></i>
                         <p>Reporte Calificaciones</p>
                     </a>
-                </li>
+                </li> -->
 
             </ul>
         </li>
@@ -63,16 +63,16 @@
                         <p>Modificación Asistencia</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="./reportattendanceStudent.php" class="nav-link">
                         <i class="far ion-ios-book-outline av-icon"></i>
                         <p>Reporte Asistencia</p>
                     </a>
-                </li>
+                </li> -->
 
             </ul>
         </li>
-        <li class="nav-item has-treeview">
+        <!-- <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
                 <i class="nav-icon ion-ios-book"></i>
                 <p>
@@ -88,5 +88,5 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> -->
 </nav>
