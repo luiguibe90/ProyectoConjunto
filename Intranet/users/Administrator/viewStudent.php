@@ -134,6 +134,7 @@ $studentService = new studentService();
                                                 <th>Estado</th>
                                                 <th>FechaInicio</th>
                                                 <th>FechaFinal</th>
+                                                <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -154,10 +155,13 @@ $studentService = new studentService();
                                                 echo "<td>" . $alumn['ESTADO'] . "</td>";
                                                 echo "<td>" . $alumn['FECHA_INICIO'] . "</td>";
                                                 echo "<td>" . $alumn['FECH_FIN'] . "</td>";
-
-                                                echo "</tr>";
-                                            }
                                             ?>
+                                            <td><a href="modifyTeacher.php?codigo='<?php echo $alumn['COD_PERSONA'] ?>'" title="Editar datos" class="btn btn-primary btn-sm"><span class="far fa-edit fa-lg" aria-hidden="true"></span></a>
+                                            </td>
+                                          <?php
+                                            echo "</tr>";
+                                          }
+                                          ?>
 
                                         </tbody>
                                     </table>

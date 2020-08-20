@@ -121,6 +121,20 @@ $countTeachers = $administratorService->countTypePeople(3);
                             <a href="addStudent.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
+
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3><?php echo $countAlumns ?></h3>
+                                <p>Modificar Alumno</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="viewTeacher.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
             </section>
             <!-- Main content -->
         </div>

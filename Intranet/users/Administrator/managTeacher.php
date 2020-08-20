@@ -130,7 +130,7 @@ $countTeachers = $administratorService->countTypePeople(3);
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="viewTeacher.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="viewStudent.php" class="small-box-footer">ir <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
             </section>
